@@ -1,0 +1,24 @@
+.signup-body{
+    width: 100%;
+    max-height: 500px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.signup-container{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.signup-head{
+    width: 90px;
+    border: 1px solid red;
+    text-align: center;
+    height: 30px;
+}
+
+.signup-main{
+    width: 250px;
+    border: 1px solid blue;
+}
