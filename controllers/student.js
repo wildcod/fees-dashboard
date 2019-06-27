@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Student = require('../models/student')
-
+const User = require('../models/user')
 
 const createStudent = (req, res, next) => {
 
@@ -23,22 +23,34 @@ const createStudent = (req, res, next) => {
     }
     student.save()
     .then(result => {
-        console.log(result)
-        res.status(200).json({
-            message : "Created Successfully",
-            createdStudent : {
-                _id : result._id,
-                name : result.name,
-                class_name : result.class_name,
-                status : result.status,
-                submit_date : result.submit_date,
-                include : result.include
-            },
-            request : {
-                type : "GET",
-                url : 'http://localhost:4000/students/' + result._id
-            }
+        // update the student id in user model
+        User.findOneAndUpdate({
+            _id : req.body.userId,
+             $push : { 'students' : result._id }
+        }).exec()
+          .then(response => {
+            res.status(200).json({
+                message : "Created Successfully",
+                createdStudent : {
+                    _id : result._id,
+                    name : result.name,
+                    class_name : result.class_name,
+                    status : result.status,
+                    submit_date : result.submit_date,
+                    include : result.include
+                },
+                request : {
+                    type : "GET",
+                    url : 'http://localhost:4000/students/' + result._id
+                }
+            })
+          })
+          .catch(err => {
+            res.status(500).json({
+                error : err
+            })
         })
+       
     })
     .catch(err => {
         res.status(500).json({

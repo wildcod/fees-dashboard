@@ -38,7 +38,7 @@ const signup = (req, res, next) => {
 const getUsers = (req, res, next) => {
     User.find()
     .select("_id name email")
-    .populate('user')
+    .populate('students')
     .exec()
     .then(users => {
         const count = users.length
