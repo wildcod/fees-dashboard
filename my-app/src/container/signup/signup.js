@@ -16,8 +16,9 @@ class Signup extends Component {
         this.setState({ [name] : value})
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async(e) => {
         e.preventDefault();
+        const res = await axios.post('/users/signup')
       }
 
    

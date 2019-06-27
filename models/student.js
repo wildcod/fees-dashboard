@@ -19,7 +19,12 @@ const studentSchema = mongoose.Schema({
        type : Date,
        default : Date.now
    },
-   include : [ {type : String}]
+   include : [ {type : String}],
+   user : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User',
+        required : true
+  }
    
 })
 

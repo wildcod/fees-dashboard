@@ -38,6 +38,7 @@ const signup = (req, res, next) => {
 const getUsers = (req, res, next) => {
     User.find()
     .select("_id name email")
+    .populate('user')
     .exec()
     .then(users => {
         const count = users.length
@@ -54,7 +55,37 @@ const getUsers = (req, res, next) => {
 }
 
 const login = (req, res, next) => {
-    
+    User.find({ email : req.body.email})
+    .exec()
+    .then(user => {
+        if(user.length < 1){
+            return res.status(401).json({
+                message : 'Auth Failed'
+            })
+        }
+
+        bcrypt.compare(req.body.password, user[0].password, (err,res) => {
+            if(err){
+                return res.status(401).json({
+                    message : 'Auth Failed'
+                })
+            }
+            if(result){
+                return res.status(200).json({
+                    message : 'Auth Successful'
+                })
+            }
+            res.status(401).json({
+                message : 'Auth Failed'
+            })
+        })
+
+    })
+    .catch(err => {
+        res.status(500).json({
+            error : err
+        })
+    })
 }
 
 
