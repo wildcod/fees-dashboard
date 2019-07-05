@@ -1,5 +1,6 @@
 {
     "env" : {
-        "Mongo_Atlas_PW" : "Softwareji"
+        "Mongo_Atlas_PW" : "Softwareji",
+        "JWT_KEY" : "secret"
     }
 }
