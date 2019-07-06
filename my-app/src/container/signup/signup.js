@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import Header from '../../component/common/header/header'
 import './signup.css'
 
+import {connect} from 'react-redux' 
+import {initiateSignup} from '../../redux/actions/authAction'
+
 class Signup extends Component {
 
     state = {
@@ -16,9 +19,11 @@ class Signup extends Component {
         this.setState({ [name] : value})
     }
 
-    handleSubmit = async(e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
-        const res = await axios.post('/users/signup')
+        const { firstname , lastname, email, password} = this.state
+        const name = firstname + ' ' + lastname;
+        this.props.initiateSignup({name , email, password});
       }
 
    
@@ -44,4 +49,15 @@ class Signup extends Component {
 
 }
 
-export default Signup
+const mapStateToProps = state => ({
+    signedUp: state.authStore.signedUp,
+  });
+
+
+const mapActionToProps = () => {
+    return {
+      initiateSignup
+    }
+}
+
+export default connect(mapStateToProps,mapActionToProps())(Signup)

@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import Header from '../../component/common/header/header'
 import './login.css'
 
-class login extends Component {
+import { connect } from 'react-redux'
+import { initiateLogin } from '../../redux/actions/authAction'
+
+class Login extends Component {
    
     render(){
         return <div>
@@ -22,4 +25,15 @@ class login extends Component {
 
 }
 
-export default login
+const mapStateToProps = state => ({
+    loggedIn: state.authStore.loggedIn,
+  });
+
+
+const mapActionToProps = () => {
+    return {
+      initiateLogin
+    }
+}
+
+export default connect(mapStateToProps,mapActionToProps())(Login)
