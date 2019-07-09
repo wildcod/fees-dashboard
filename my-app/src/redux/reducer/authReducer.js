@@ -43,11 +43,11 @@ const initialState = {
           return {
               ...state,
               requestingLogin : false,
-              token : action.payload.token,
+              token : action.payload.data["token"],
               loggedIn : true,
-              email : action.payload.email,
-              name : action.payload.name,
-              _id : action.payload._id,
+              email : action.payload.data["email"],
+              name : action.payload.data["name"],
+              _id : action.payload.data["_id"],
           }
       case AUTH_ERROR:
       case LOGIN_FAIL:

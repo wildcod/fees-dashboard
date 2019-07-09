@@ -6,6 +6,22 @@ import { connect } from 'react-redux'
 import { initiateLogin } from '../../redux/actions/authAction'
 
 class Login extends Component {
+
+    state = {
+        email : '',
+        password : ''
+    }
+
+    allChangeHandler = (e) => {
+        const {name,value} = e.target
+        this.setState({ [name] : value})
+    }
+
+    handleLogin = (e) => {
+        e.preventDefault();
+        const { email, password } = this.state
+        this.props.initiateLogin({email, password})
+    }
    
     render(){
         return <div>
@@ -14,9 +30,11 @@ class Login extends Component {
                         <div className="login-container">
                             <div className="login-head">Login</div>
                             <div className="login-main">
-                                    <input type="text" required className="input" placeholder="Email"/>
-                                    <input type="password" required className="input" placeholder="Password"/>
-                                    <input type="button" value="Submit" className="btn" /> 
+                                <form onSubmit={this.handleLogin}>
+                                    <input type="text" required className="input"name="email" value={this.state.email} placeholder="Email" onChange={this.allChangeHandler}/>
+                                    <input type="password" required className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.allChangeHandler}/>
+                                    <input type="submit" value="Submit" className="btn" /> 
+                                </form>
                             </div>
                         </div>
                     </div>

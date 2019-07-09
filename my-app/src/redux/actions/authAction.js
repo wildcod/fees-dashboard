@@ -56,14 +56,14 @@ export const initiateLogin = ({email, password}) => async(dispatch) => {
             email,password
         })
 
-        console.log(res)
+        // console.log(res.data)
 
-        // dispatch({
-        //     type : LOGIN_SUCCESS,
-        //     payload : {
-
-        //     }
-        // })
+        dispatch({
+            type : LOGIN_SUCCESS,
+            payload : {
+                data : res.data
+            }
+        })
 
     }catch(e){
 
