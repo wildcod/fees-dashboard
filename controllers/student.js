@@ -12,13 +12,15 @@ const createStudent = (req, res, next) => {
             class_name : req.body.class_name,
             status : true,
             submit_date : new Date(req.body.submit_date),
-            include : req.body.include
+            include : req.body.include,
+            joining_date : new Date(req.body.joining_date)
         })
     }else {
         student = new Student({
             _id : new mongoose.Types.ObjectId(),
             name : req.body.name,
             class_name : req.body.class_name,
+            joining_date : new Date(req.body.joining_date)
         })
     }
     student.save()
@@ -64,7 +66,7 @@ const createStudent = (req, res, next) => {
 const getStudents = (req, res, next) => {
 
     Student.find()
-    .select("_id name class_name status submit_date include")
+    .select("_id name class_name status submit_date include joining_date")
     .exec()
     .then(students => {
         const count = students.length;
@@ -84,7 +86,7 @@ const getStudents = (req, res, next) => {
 const getStudent = (req, res, next) => {
 
     Student.findById({ _id : req.params.studentId})
-    .select("_id name class_name status submit_date include")
+    .select("_id name class_name status submit_date include joining_date")
     .exec()
     .then(result => {
         res.status(200).json({

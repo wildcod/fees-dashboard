@@ -4,6 +4,7 @@ import Login from './container/login/login'
 import Signup from './container/signup/signup'
 import Home from './container/home/home'
 import NotFound from './container/not-found/not-found'
+import AllClass from './container/all-class/all-class'
 import { Link, Router } from "@reach/router"
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <Router>
           <Home path="/" />
+          <AllClass path="/classes" />
           <Signup path="/signup" />
           <Login path="/login" />
           <NotFound default />

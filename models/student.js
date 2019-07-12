@@ -19,6 +19,10 @@ const studentSchema = mongoose.Schema({
        type : Date,
        default : ''
    },
+   joining_date : {
+    type : Date,
+    default : ''
+   },
    include : [ {type : String}]
    
 })
