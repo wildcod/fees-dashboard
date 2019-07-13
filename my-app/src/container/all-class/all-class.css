@@ -1,0 +1,77 @@
+.class-nav{
+    width : 100%;
+    margin : 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.class-nav-heading{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 59px;
+    color: #000000;
+}
+
+.class-nav-btn { 
+    position: absolute;
+    right: 30px;
+    width: 125px;
+    height: 40px;
+    background: #1FC7A8;
+    border : none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.class-nav-btn-content {
+    width: 112px;
+    height: 35px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FFFFFF;
+}
+
+.class-main{
+    width: 100%;
+    margin : 3%;
+    display: flex;
+    justify-content: center;
+    height: 500px;
+}
+
+.class-main-content{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 25%;
+    height: 38%;
+    background: #1FC7A8;
+    border-radius: 10px;
+}
+
+
+.class-dropdown-field {
+    margin : 7%;
+    width : 250px;
+    height: 40px;
+    background: #FFFFFF;
+}
+
+.class-btn{
+    width: 120px;
+    height: 40px;
+    font-size: 18px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    /* margin: 53px; */
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #1FC7A8;
+}

@@ -6,6 +6,7 @@ import Home from './container/home/home'
 import NotFound from './container/not-found/not-found'
 import AllClass from './container/all-class/all-class'
 import { Link, Router } from "@reach/router"
+import Students from './container/students/students';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Router>
           <Home path="/" />
           <AllClass path="/classes" />
+          <Students path="/students"/>
           <Signup path="/signup" />
           <Login path="/login" />
           <NotFound default />
