@@ -21,13 +21,44 @@
 .students-list-container{
     width : 600px;
     height: 500px;
-    border: 1px solid red;
 }
 
 .students-list-items{
+    display: flex;
     width: 98%;
     margin : 5px;
-    height: 50px;
+    height: 60px;
     background: #F7F7F7;
     border-radius: 10px;
+}
+
+.students-name{
+    display: flex;
+    font-weight: 500;
+    font-size: 25px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    width: 50%;
+}
+
+.students-update{
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+
+.students-update-iocns{
+    padding: 10px;
+    font-size: 1.3em;
+}
+
+.students-status{
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
 }
