@@ -13,10 +13,10 @@ const Students = () => {
                     <div className="students-list-items">
                             <div className="students-name">Sahil Kanojia</div>
                             <div className="students-update">
-                               <span class="students-status"></span>
-                               <span className="students-update-iocns">
-                                     <i class="fas fa-edit"></i>&nbsp; &nbsp; 
-                                     <i class="fas fa-trash"></i>
+                               <span className="students-status"></span>
+                               <span className="students-update-icons">
+                                     <i className="fas fa-edit"></i>&nbsp; &nbsp; 
+                                     <i className="fas fa-trash"></i>
                               </span>
                             </div>
                     </div>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Redirect } from "@reach/router"
 import Header from '../../component/common/header/header'
 import './login.css'
 
@@ -24,6 +25,10 @@ class Login extends Component {
     }
    
     render(){
+        if(this.props.loggedIn){
+            return <Redirect  to="/classes" noThrow/>
+        }
+        else {
         return <div>
                     <Header />
                     <div className="login-body">
@@ -40,6 +45,7 @@ class Login extends Component {
                     </div>
                 </div>
         }
+    }
 
 }
 
