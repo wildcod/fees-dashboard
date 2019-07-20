@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Redirect } from "@reach/router"
 import Header from '../../component/common/header/header'
 import './login.css'
 
 import { connect } from 'react-redux'
+import { withRouter } from "react-router";
 import { initiateLogin } from '../../redux/actions/authAction'
 
 class Login extends Component {
@@ -13,22 +13,25 @@ class Login extends Component {
         password : ''
     }
 
+    componentDidMount(){
+        console.log(this.props)
+    }
+
     allChangeHandler = (e) => {
         const {name,value} = e.target
         this.setState({ [name] : value})
     }
 
-    handleLogin = (e) => {
+    handleLogin = async(e) => {
         e.preventDefault();
         const { email, password } = this.state
-        this.props.initiateLogin({email, password})
+        await this.props.initiateLogin({email, password})
+        if(this.props.loggedIn){
+           this.props.history.push('/classes')
+        }
     }
    
     render(){
-        if(this.props.loggedIn){
-            return <Redirect  to="/classes" noThrow/>
-        }
-        else {
         return <div>
                     <Header />
                     <div className="login-body">
@@ -47,8 +50,6 @@ class Login extends Component {
         }
     }
 
-}
-
 const mapStateToProps = state => ({
     loggedIn: state.authStore.loggedIn,
   });
@@ -60,4 +61,4 @@ const mapActionToProps = () => {
     }
 }
 
-export default connect(mapStateToProps,mapActionToProps())(Login)
+export default withRouter(connect(mapStateToProps,mapActionToProps())(Login))

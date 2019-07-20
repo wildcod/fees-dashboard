@@ -19,6 +19,7 @@ const initialState = {
     signedUp : false,
     requestingSignup : false,
     loggedIn : false,
+    students : null
 }
 
   export default function(state = initialState, action) {
@@ -48,6 +49,7 @@ const initialState = {
               email : action.payload.data["email"],
               name : action.payload.data["name"],
               _id : action.payload.data["_id"],
+              students : action.payload.data["students"]
           }
       case AUTH_ERROR:
       case LOGIN_FAIL:
@@ -59,6 +61,7 @@ const initialState = {
           email : '',
           name : '',
           _id : '',
+          students : null,
           requestingLogin: false,
           requestingSignup: false,
           loggedIn : false,

@@ -1,25 +1,20 @@
 import React, {Component} from 'react'
-import { Redirect } from "@reach/router"
 import Header from '../../component/common/header/header'
+import { withRouter } from "react-router";
 import './all-class.css'
 
 class AllCLass extends Component {
 
     state = {
         selectValue : "",
-        go : false
     }
 
-    handleChange = (e) => {
-        this.setState({selectValue : e.target.value})
+    handleChange = (e) => {  
+        this.props.history.push('/students/'+ e.target.value)
     }
 
     render(){ 
 
-    if(this.state.go){
-        return <Redirect  to="/students" noThrow/> 
-    }    
-    else{
     return (
         <div>
             <Header />
@@ -51,6 +46,4 @@ class AllCLass extends Component {
     );
     }
 }
-}
-
-export default AllCLass
+export default withRouter(AllCLass)

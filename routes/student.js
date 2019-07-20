@@ -9,7 +9,7 @@ const modifyStudent = require('../controllers/student').modifyStudent
 const getStudent = require('../controllers/student').getStudent
 
 router.get('/',checkAuth, getStudents)
-router.post('/',checkAuth, createStudent)
+router.post('/', createStudent)
 router.delete('/:studentId',checkAuth, deleteStudent)
 router.patch('/:studentId' ,checkAuth, modifyStudent)
 router.get('/:studentId',checkAuth, getStudent)

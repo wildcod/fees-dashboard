@@ -57,6 +57,7 @@ const getUsers = (req, res, next) => {
 
 const login = (req, res, next) => {
     User.find({ email : req.body.email})
+    .populate('students','status submit_date joining_date include _id name class_name')
     .exec()
     .then(user => {
         if(user.length < 1){
@@ -89,7 +90,8 @@ const login = (req, res, next) => {
                     token,
                     email : user[0].email,
                     name : user[0].name,
-                    _id : user[0]._id
+                    _id : user[0]._id,
+                    students : user[0].students
                 })
             }
             res.status(401).json({

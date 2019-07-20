@@ -25,10 +25,11 @@ const createStudent = (req, res, next) => {
     }
     student.save()
     .then(result => {
-        // update the student id in user model
-        User.findOneAndUpdate({
-            _id : req.body.userId,
-             $push : { 'students' : result._id }
+        // add the student id in user model
+        User.findOneAndUpdate(
+            {_id : req.body.userId},
+            {
+             $push : { 'students' : result._id },
         }).exec()
           .then(response => {
             res.status(200).json({
@@ -49,7 +50,8 @@ const createStudent = (req, res, next) => {
           })
           .catch(err => {
             res.status(500).json({
-                error : err
+                error : err,
+                message : "user adding error"
             })
         })
        

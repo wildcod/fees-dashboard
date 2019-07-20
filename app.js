@@ -18,7 +18,10 @@ mongoose.connect('mongodb+srv://sahilkanojia:'+
  '@cluster0-szcya.mongodb.net/test?retryWrites=true',
  
  {
-     useMongoClient : true
+     useMongoClient : true,
+     useFindAndModify : false,
+      useCreateIndex: true ,
+      useNewUrlParser: true 
  })
 
 
