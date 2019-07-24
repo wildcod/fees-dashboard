@@ -5,6 +5,7 @@ import Signup from './container/signup/signup'
 import Home from './container/home/home'
 import NotFound from './container/not-found/not-found'
 import AllClass from './container/all-class/all-class'
+import Profile from './container/profile/profile'
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Students from './container/students/students';
 
@@ -18,6 +19,8 @@ function App() {
           <Route path="/students/:classId" component={Students}/>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
+          {/* <Route path="/profile/:classAndStudentId" component={Profile} /> */}
+          <Route path="/profile" component={Profile} />
           <Route component={NotFound} />
           </Switch>
       </Router>

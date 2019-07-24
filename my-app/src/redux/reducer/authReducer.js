@@ -6,7 +6,8 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     AUTH_ERROR,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    DELETE_STUDENT
 } from '../types'
 
 
@@ -50,7 +51,12 @@ const initialState = {
               name : action.payload.data["name"],
               _id : action.payload.data["_id"],
               students : action.payload.data["students"]
-          }
+          };
+      case DELETE_STUDENT:
+           return {
+               ...state,
+               students : state.students.filter(student => student._id != action.payload.deleteId)
+           }
       case AUTH_ERROR:
       case LOGIN_FAIL:
       case LOGOUT_SUCCESS:

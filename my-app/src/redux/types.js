@@ -20,3 +20,8 @@ export const GET_ERROR = 'get-error'
 export const CLEAR_AUTH = 'clear_auth'
 export const CLEAR_AUTH_ERROR = 'clear_auth_error'
 
+//students CURD
+export const DELETE_STUDENT = 'delete_student'
+
+
+

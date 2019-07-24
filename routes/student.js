@@ -7,11 +7,13 @@ const getStudents = require('../controllers/student').getStudents
 const deleteStudent = require('../controllers/student').deleteStudent
 const modifyStudent = require('../controllers/student').modifyStudent
 const getStudent = require('../controllers/student').getStudent
+const updateSubmitDate = require('../controllers/student').updateSubmitDate
 
-router.get('/',checkAuth, getStudents)
+router.get('/', getStudents)
 router.post('/', createStudent)
-router.delete('/:studentId',checkAuth, deleteStudent)
-router.patch('/:studentId' ,checkAuth, modifyStudent)
+router.delete('/:studentId', deleteStudent)
+router.patch('/:studentId' , modifyStudent)
+router.patch('/modify-date/:studentId',updateSubmitDate)
 router.get('/:studentId',checkAuth, getStudent)
 
 module.exports = router

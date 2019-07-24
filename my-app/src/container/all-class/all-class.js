@@ -9,6 +9,10 @@ class AllCLass extends Component {
         selectValue : "",
     }
 
+    componentDidMount(){
+        console.log(this.props)
+    }
+
     handleChange = (e) => {  
         this.props.history.push('/students/'+ e.target.value)
     }

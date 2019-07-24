@@ -1,0 +1,56 @@
+.profile-main{
+    display: flex;
+    width: 100%;
+    min-height: 100px;
+    padding : 20px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile-table{
+    width: 40%;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+.profile-edit{
+    background: #1FC7A8 !important;
+    color: #fff !important;
+
+}
+
+.profile-fees-status{
+  display: flex;
+  width: 100%;
+  min-height: 100px;
+  padding : 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+}
+
+.profile-month-dropdown{
+  width: 10% !important;
+  height: 20px !important;
+}
+
+.profile-fees-table{
+  display: block !important;
+}
+
+.profile-dropdown{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}

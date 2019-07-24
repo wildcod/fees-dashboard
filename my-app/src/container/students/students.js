@@ -3,6 +3,10 @@ import Header from '../../component/common/header/header';
 import './students.css'
 import { connect } from 'react-redux'
 import { withRouter } from "react-router";
+import { Button,Modal } from 'semantic-ui-react'
+import { deleteStudent } from '../../redux/actions/studentAction'
+
+let studentOfClassId;
 
 String.prototype.capitalize = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -10,13 +14,36 @@ String.prototype.capitalize = function() {
 
 class Students extends Component {
 
-    handleDelete = (delteId) =>{
-        
+    state = {
+        open : false,
+        deleteId:''
     }
 
+    shouldComponentUpdate(nextProps,nexState) {
+            const propsDifference = this.props.students !== nextProps.students;
+            const stateDifference = this.state !== nexState;
+            return stateDifference || propsDifference
+    }
+
+
+    handleDelete = async() =>{
+        const { deleteId } = this.state
+        await this.props.deleteStudent({deleteId});
+        this.close();
+    }
+
+    handleName = (studentId) => {
+        this.props.history.push('/profile/'+ this.props.match.params.classId + '$' + studentId)
+    }
+
+    show = (deleteId) =>{ 
+        this.setState({ open:true,deleteId })
+       }
+    close = () => this.setState({ open: false })
     render(){
         const classId = this.props.match.params.classId;
 
+        const {open} = this.state
 
         const studentOfClassId = this.props.students.filter(student => {
             return student.class_name == classId
@@ -29,12 +56,12 @@ class Students extends Component {
                 classStatus = "students-status-true"
             }
             return  <div className="students-list-items" key={student._id}>
-                            <div className="students-name">{student.name.capitalize()}</div>
+                            <div className="students-name" onClick={() => this.handleName(student._id)}>{student.name.capitalize()}</div>
                             <div className="students-update">
                             <span className={classStatus}></span>
                             <span className="students-update-icons">
-                                    <i className="fas fa-edit"></i>&nbsp; &nbsp; 
-                                    <i className="fas fa-trash"  onClick={() => { this.handleDelete(student._id)}}></i>
+                                    {/* <i className="fas fa-edit"></i>&nbsp; &nbsp;  */}
+                                    <i className="fas fa-trash"  onClick={() => { this.show(student._id)}}></i>
                             </span>
                             </div>
                     </div>
@@ -50,6 +77,16 @@ class Students extends Component {
                     {students}
                 </div>
             </div>
+            <Modal size="mini" open={open} onClose={this.close}>
+                <Modal.Header>Delete Your Account</Modal.Header>
+                <Modal.Content>
+                    <p>Are you sure you want to delete your account</p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button negative onClick={this.close}>No</Button>
+                    <Button positive icon='checkmark' onClick={this.handleDelete} labelPosition='right' content='Yes' />
+                </Modal.Actions>
+            </Modal>
         </div>
     );
 }
@@ -59,4 +96,10 @@ const mapStateToProps = state => ({
     students: state.authStore.students,
   });
 
-export default withRouter(connect(mapStateToProps)(Students))
+  const mapActionToProps = () => {
+    return {
+      deleteStudent
+    }
+}
+
+export default withRouter(connect(mapStateToProps,mapActionToProps())(Students))

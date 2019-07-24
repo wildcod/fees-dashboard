@@ -107,21 +107,22 @@ const getStudent = (req, res, next) => {
 const modifyStudent = (req, res, next) => {
 
     const id = req.params.studentId;
+    console.log(req.body)
     const updateOps = {};
     for(const ops of req.body){
         updateOps[ops.propName] = ops.value
     }
-
-    Student.update({ 
-        _id : id, 
-        $set : updateOps
-    }).exec()
+   console.log(updateOps)
+    Student.findOneAndUpdate( 
+       { _id : id }, 
+       { $set : updateOps }
+    ).exec()
     .then(result => {
           res.status(200).json({
               message : "Updated Student",
               request : {
                   type : 'GET',
-                  url : 'http://localhost:4000/students/' + studentId._id
+                  url : 'http://localhost:4000/students/' + result._id
               }
           })
     })
@@ -133,9 +134,33 @@ const modifyStudent = (req, res, next) => {
 
 }
 
+const updateSubmitDate = (req, res, next) => {
+    Student.findOneAndUpdate(
+        {_id : req.params.studentId},
+        {
+         $push : { 'submit_date' : new Date(req.body.submit_date)},
+         $set : { 'include' : req.body.include} 
+        },
+        {new : true}
+    ).exec()
+    .then(result => {
+        res.status(500).json({
+            message : "updated",
+            result
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            error : err
+        })
+    })
+
+}
+
 const deleteStudent = (req, res, next) => {
 
-    Student.remove({ _id : req.params.studentId})
+    Student.remove({ _id : req.params.studentId},
+       )
     .exec()
     .then(result => {
         res.status(200).json({
@@ -156,5 +181,6 @@ module.exports = {
     getStudents,
     deleteStudent,
     modifyStudent,
-    getStudent
+    getStudent,
+    updateSubmitDate
 }
