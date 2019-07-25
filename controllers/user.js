@@ -57,7 +57,7 @@ const getUsers = (req, res, next) => {
 
 const login = (req, res, next) => {
     User.find({ email : req.body.email})
-    .populate('students','status submit_date joining_date include _id name class_name')
+    .populate('students','status submit_date_and_include joining_date _id name class_name')
     .exec()
     .then(user => {
         if(user.length < 1){

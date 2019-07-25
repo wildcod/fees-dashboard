@@ -14,6 +14,6 @@ router.post('/', createStudent)
 router.delete('/:studentId', deleteStudent)
 router.patch('/:studentId' , modifyStudent)
 router.patch('/modify-date/:studentId',updateSubmitDate)
-router.get('/:studentId',checkAuth, getStudent)
+router.get('/:studentId', getStudent)
 
 module.exports = router

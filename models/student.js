@@ -15,15 +15,14 @@ const studentSchema = mongoose.Schema({
        type : Boolean,
        default : false
    },
-   submit_date : [{
-       type : Date,
-       default : ''
-   }],
    joining_date : {
     type : Date,
     default : ''
    },
-   include : [ {type : String}]
+   submit_date_and_include : [{
+        submit_date : Date,
+        include : [String]
+   }]
    
 })
 

@@ -19,8 +19,7 @@ function App() {
           <Route path="/students/:classId" component={Students}/>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          {/* <Route path="/profile/:classAndStudentId" component={Profile} /> */}
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile/:classAndStudentId" component={Profile} />
           <Route component={NotFound} />
           </Switch>
       </Router>
