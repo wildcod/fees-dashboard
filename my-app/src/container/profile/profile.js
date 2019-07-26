@@ -29,33 +29,40 @@ class Profile extends Component {
      this.state = {
          classAndStudentId : this.props.match.params["classAndStudentId"],
          month : null,
-         year : null,
          monthAndYear: null,
-         checkAll : null
+         checkAll : false,
+         dateFilter : false
      }
 
  }
 
  changeHandler = (e,data) => {
      const {name,value} = data
-     this.setState({[name] : value})
+     const { month } = this.state
+     if(name == "year" && month && value){ 
+         
+       const updateMonthAndYear = month + '/' + value;
+        this.setState({ monthAndYear : updateMonthAndYear, checkAll : false, dateFilter:true }) 
+     }else{
+        this.setState({[name] : value})
+     }
  }
 
  checkStatusHandler = () => {
      const {month,year} = this.state;
      const monthAndYear = month + '/' + year;
-     this.setState({monthAndYear : monthAndYear})  
+     this.setState({ monthAndYear : monthAndYear , checkAll : false })  
  }
 
  checkAllHandler = () => {
-     this.setState({ checkAll : true})
+     this.setState({ dateFilter : false,checkAll : true})
  }
 
 
     
  render(){
 
-    const { classAndStudentId , monthAndYear, checkAll} = this.state ;
+    const { classAndStudentId ,checkAll, dateFilter,monthAndYear} = this.state ;
 
     const [ classId, studentId ] = classAndStudentId.split('$');
 
@@ -66,32 +73,7 @@ class Profile extends Component {
     const selectedStudent = studentOfClassId.filter(student => {
         return student._id == studentId
     })
-    let studentFeesRecord;
-
-   console.log(monthAndYear)
-    if(monthAndYear || checkAll){
-        if(monthAndYear){
-                studentFeesRecord = selectedStudent[0].submit_date_and_include.filter(records => {
-                    return records.submit_date.substring(2) == monthAndYear
-                }).map((record,i) => {
-                    return  <Table.Row key={record._id}>
-                                <Table.Cell>{i+1}</Table.Cell>
-                                <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
-                                <Table.Cell>{record.include.toString()}</Table.Cell>
-                            </Table.Row>
-               })
-        }
-        else if(checkAll){
-               studentFeesRecord = selectedStudent[0].submit_date_and_include.map((record,i) => {
-                return  <Table.Row key={record._id}>
-                            <Table.Cell>{i+1}</Table.Cell>
-                            <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
-                            <Table.Cell>{record.include.toString()}</Table.Cell>
-                        </Table.Row>
-    })
-        }
-    }
-  
+    
 
     return (
         <div>
@@ -140,8 +122,6 @@ class Profile extends Component {
                     onChange={this.changeHandler}
             />
             &nbsp;&nbsp;
-            <Button onClick={this.checkStatusHandler}>Check</Button>
-            &nbsp;&nbsp;
             <Button onClick={this.checkAllHandler}>All</Button>
             </div>
          
@@ -156,7 +136,24 @@ class Profile extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        {studentFeesRecord}
+                        {checkAll && selectedStudent[0].submit_date_and_include.map((record,i) => {
+                            return  <Table.Row key={record._id}>
+                                        <Table.Cell>{i+1}</Table.Cell>
+                                        <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
+                                        <Table.Cell>{record.include.toString()}</Table.Cell>
+                                    </Table.Row>
+                        })}
+                        {dateFilter && selectedStudent[0].submit_date_and_include.filter(record => {
+                            const date  = reformatDate(record.submit_date.substring(0,10))
+                            return date.substring(3) == monthAndYear
+                        }).map((record,i) => {
+                            return  <Table.Row key={record._id}>
+                                        <Table.Cell>{i+1}</Table.Cell>
+                                        <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
+                                        <Table.Cell>{record.include.toString()}</Table.Cell>
+                                    </Table.Row>
+                        })
+                     }
                     </Table.Body>
                 </Table>
                 </div>
