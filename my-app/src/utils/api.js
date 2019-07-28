@@ -1,7 +1,9 @@
 const uris = {
     signupUrl : '/users/signup',
     loginUrl : '/users/login',
-    deleteStudent : '/students'
+    deleteStudent : '/students',
+    updateStudent : '/students',
+    createStudent : '/students'
 }
 
 

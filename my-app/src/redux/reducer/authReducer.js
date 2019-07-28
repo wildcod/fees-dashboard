@@ -7,7 +7,9 @@ import {
     LOGIN_SUCCESS,
     AUTH_ERROR,
     LOGOUT_SUCCESS,
-    DELETE_STUDENT
+    DELETE_STUDENT,
+    UPDATE_STUDENT,
+    CREATE_STUDENT
 } from '../types'
 
 
@@ -20,10 +22,11 @@ const initialState = {
     signedUp : false,
     requestingSignup : false,
     loggedIn : false,
-    students : null
+    students : []
 }
 
   export default function(state = initialState, action) {
+
     switch (action.type) {
       case SIGNUP_START:
         return {
@@ -52,11 +55,30 @@ const initialState = {
               _id : action.payload.data["_id"],
               students : action.payload.data["students"]
           };
+      case CREATE_STUDENT:
+            let updatedStudents = state.students;
+            updatedStudents.push(action.payload.createdStudent)
+            return {
+              ...state,
+                students : updatedStudents
+            }
       case DELETE_STUDENT:
            return {
                ...state,
                students : state.students.filter(student => student._id != action.payload.deleteId)
            }
+      case UPDATE_STUDENT: 
+                  let students = state.students
+                  students.find((o, i) => {
+                    if (o._id == action.payload.updateData._id) {
+                        state.students[i] = action.payload.updateData;
+                        return true; // stop searching
+                    }
+                });
+                    return {
+                        ...state,
+                        students : students
+                    }        
       case AUTH_ERROR:
       case LOGIN_FAIL:
       case LOGOUT_SUCCESS:

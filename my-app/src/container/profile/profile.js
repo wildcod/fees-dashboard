@@ -4,7 +4,8 @@ import { Button } from 'semantic-ui-react'
 import './profile.css'
 import { connect } from 'react-redux'
 import { withRouter } from "react-router";
-import { Dropdown, Table } from 'semantic-ui-react'
+import { Dropdown, Table, Modal, Form ,Input} from 'semantic-ui-react'
+import { updateStudent} from '../../redux/actions/studentAction'
 
 //year generator
 var min = new Date("03/11/2010").getFullYear(),
@@ -31,7 +32,11 @@ class Profile extends Component {
          month : null,
          monthAndYear: null,
          checkAll : false,
-         dateFilter : false
+         dateFilter : false,
+         open : false,
+         name : '',
+         date : '',
+         updateClass : ''
      }
 
  }
@@ -54,15 +59,37 @@ class Profile extends Component {
      this.setState({ monthAndYear : monthAndYear , checkAll : false })  
  }
 
+ shouldComponentUpdate(nextProps,nexState) {
+    const propsDifference = this.props.students !== nextProps.students;
+    const stateDifference = this.state !== nexState;
+    return stateDifference || propsDifference
+}
+
  checkAllHandler = () => {
      this.setState({ dateFilter : false,checkAll : true})
  }
 
+ profileChangeHandler = (e) => {
+        const { name, value } = e.target;
+        this.setState({[name] : value});
+ }
+
+ profileUpdateHandler = async(studentId) => {
+     const { name,date,updateClass } = this.state;
+     await this.props.updateStudent({name,date,updateClass,studentId})
+     this.close();
+ }
+
+
+ show = () => this.setState({open: true })
+ close = () => this.setState({ open: false })
 
     
  render(){
 
-    const { classAndStudentId ,checkAll, dateFilter,monthAndYear} = this.state ;
+    const { classAndStudentId ,checkAll, dateFilter,monthAndYear,open,
+            name,date,updateClass
+    } = this.state ;
 
     const [ classId, studentId ] = classAndStudentId.split('$');
 
@@ -73,7 +100,7 @@ class Profile extends Component {
     const selectedStudent = studentOfClassId.filter(student => {
         return student._id == studentId
     })
-    
+    console.log(name,date,updateClass)
 
     return (
         <div>
@@ -84,7 +111,7 @@ class Profile extends Component {
                         <thead>
                             <tr>
                                 <td>Name</td>
-                                <td>{selectedStudent[0].name}</td>
+                                <td >{selectedStudent[0].name}</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -99,7 +126,10 @@ class Profile extends Component {
                         </tbody>
                     </table>
                 </div><br/>
-                <Button className="profile-edit">Edit Profile</Button>
+                <div>
+                <Button className="profile-edit" onClick={this.show}>Edit Profile</Button>
+                <Button className="profile-edit" onClick={this.show}>Submit Fees</Button>
+                </div>
             </div>
             <div className="profile-fees-status">
                 <div className="profile-dropdown">
@@ -158,6 +188,22 @@ class Profile extends Component {
                 </Table>
                 </div>
             </div>
+            <Modal size="tiny" open={open} onClose={this.close}>
+            <Modal.Header>Edit Profile</Modal.Header>
+            <Modal.Content>
+                <Form  >
+                    <Input type="text" placeholder="first name" name="name"
+                            className="profile-input-modal" value={name} onChange={this.profileChangeHandler}/>
+                    <Input type="date" placeholder="joining date" name="date"
+                            className="profile-input-modal" value={date} onChange={this.profileChangeHandler} />
+                    <Input type="text" placeholder="class" name="updateClass"
+                             className="profile-input-modal" value={updateClass} onChange={this.profileChangeHandler} /><br/>
+                    <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}
+                      onClick={() => this.profileUpdateHandler(selectedStudent[0]._id)}>Submit</Button> &nbsp;&nbsp;
+                    <Button onClick={this.close} style={{ background : "#db2828", color : "#fff"}}>Cancel</Button>
+                </Form>
+               </Modal.Content> 
+            </Modal>
         </div>
     );
  }
@@ -167,8 +213,14 @@ const mapStateToProps = state => ({
     students: state.authStore.students,
   });
 
+  const mapActionToProps = () => {
+    return {
+        updateStudent
+    }
+}
 
-export default withRouter(connect(mapStateToProps)(Profile))
+
+export default withRouter(connect(mapStateToProps,mapActionToProps())(Profile))
 
 const months = [
 	{
@@ -232,3 +284,5 @@ const months = [
 		"value": "12"
 	}
 ]
+
+

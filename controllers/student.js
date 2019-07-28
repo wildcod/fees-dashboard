@@ -38,6 +38,7 @@ const createStudent = (req, res, next) => {
                     name : result.name,
                     class_name : result.class_name,
                     status : result.status,
+                    joining_date : result.joining_date,
                     submit_date_and_include : result.submit_date_and_include
                 },
                 request : {
@@ -113,14 +114,16 @@ const modifyStudent = (req, res, next) => {
    console.log(updateOps)
     Student.findOneAndUpdate( 
        { _id : id }, 
-       { $set : updateOps }
+       { $set : updateOps },
+       { new : true}
     ).exec()
     .then(result => {
           res.status(200).json({
               message : "Updated Student",
               request : {
                   type : 'GET',
-                  url : 'http://localhost:4000/students/' + result._id
+                  url : 'http://localhost:4000/students/' + result._id,
+                  result
               }
           })
     })
