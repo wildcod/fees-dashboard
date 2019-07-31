@@ -26,8 +26,8 @@ class Profile extends Component {
          date : '',
          updateClass : '',
          feesOpen : false,
-         submit_date:'',
-         include :''
+         submit_date: '',
+         include : ''
      }
 
  }
@@ -78,8 +78,10 @@ class Profile extends Component {
 
  submitfeesChandler = async(studentId) => {
     const { submit_date, include } = this.state;
+    if(submit_date .length > 0 && include.length > 0){
     await this.props.submitFees({submit_date,include,studentId})
     this.feesClose();
+    }
  }
 
  show = () => this.setState({open: true })
@@ -222,9 +224,9 @@ class Profile extends Component {
                             multiple
                             search
                             selection
+                            required
                             options={stateOptions}
                             onChange={this.includeHandler}
-                            required
                             className="profile-dropdown-modal"
                         /><br/>
                     <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}

@@ -20,8 +20,8 @@ const studentSchema = mongoose.Schema({
     default : ''
    },
    submit_date_and_include : [{
-        submit_date : Date,
-        include : [String]
+        submit_date : { type : Date, required : true},
+        include : [ {type :String , required : true }]
    }]
    
 })

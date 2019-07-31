@@ -19,11 +19,12 @@ class Signup extends Component {
         this.setState({ [name] : value})
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async(e) => {
         e.preventDefault();
         const { firstname , lastname, email, password} = this.state
         const name = firstname + ' ' + lastname;
-        this.props.initiateSignup({name , email, password});
+       const res = await this.props.initiateSignup({name , email, password});
+       console.log(res)
       }
 
    
