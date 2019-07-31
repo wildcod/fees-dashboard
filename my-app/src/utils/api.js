@@ -3,7 +3,8 @@ const uris = {
     loginUrl : '/users/login',
     deleteStudent : '/students',
     updateStudent : '/students',
-    createStudent : '/students'
+    createStudent : '/students',
+    updateSubmitDate : '/students/modify-date'
 }
 
 

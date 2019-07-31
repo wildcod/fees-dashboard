@@ -24,6 +24,7 @@ export const CLEAR_AUTH_ERROR = 'clear_auth_error'
 export const DELETE_STUDENT = 'delete_student'
 export const UPDATE_STUDENT = 'update_student'
 export const CREATE_STUDENT = 'create_student'
+export const FEES_STUDENT = 'fees_student'
 
 
 

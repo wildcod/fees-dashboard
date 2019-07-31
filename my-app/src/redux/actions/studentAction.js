@@ -4,7 +4,8 @@ import api from '../../utils/api'
 import {
    DELETE_STUDENT,
    UPDATE_STUDENT,
-   CREATE_STUDENT
+   CREATE_STUDENT,
+   FEES_STUDENT
 } from '../types'
 
 import { returnErrors } from './errorAction'
@@ -109,6 +110,35 @@ export const createStudent = ({name,joiningDate,classOfStudent,userId})  => asyn
       }catch(e){
         dispatch(
             returnErrors(e.response.data, e.response.status, 'CREATE_ERROR')
+          );
+    }
+
+}
+
+
+export const submitFees = ({submit_date,include,studentId})  => async(dispatch) => {
+
+    try{
+          const feesField = {
+            "submit_date_and_include" : {
+                "submit_date" : submit_date,
+                "include"	: include
+            }
+          }
+
+          const res = await axios.patch(api('updateSubmitDate', studentId), feesField);
+    
+
+          dispatch({
+            type : FEES_STUDENT,
+            payload : {
+               result : res.result
+            }
+        })          
+
+      }catch(e){
+        dispatch(
+            returnErrors(e.response.data, e.response.status, 'SUBMIT_FEES_ERROR')
           );
     }
 

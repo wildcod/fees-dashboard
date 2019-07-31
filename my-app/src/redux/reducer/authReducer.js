@@ -78,7 +78,19 @@ const initialState = {
                     return {
                         ...state,
                         students : students
-                    }        
+                    } 
+       case UPDATE_STUDENT: 
+                    let newStudents = state.students
+                    newStudents.find((o, i) => {
+                      if (o._id == action.payload.result._id) {
+                          state.students[i] = action.payload.result;
+                          return true; // stop searching
+                      }
+                  });
+                      return {
+                          ...state,
+                          students : newStudents
+                      }        
       case AUTH_ERROR:
       case LOGIN_FAIL:
       case LOGOUT_SUCCESS:

@@ -58,3 +58,9 @@ table {
 .profile-input-modal{
   width: 100%;
 }
+
+.profile-dropdown-modal{
+  width : 95% !important;
+  margin-left: 22px !important;
+  margin-bottom: 10px !important;
+}

@@ -5,21 +5,9 @@ import './profile.css'
 import { connect } from 'react-redux'
 import { withRouter } from "react-router";
 import { Dropdown, Table, Modal, Form ,Input} from 'semantic-ui-react'
-import { updateStudent} from '../../redux/actions/studentAction'
+import { updateStudent ,submitFees} from '../../redux/actions/studentAction'
+import { reformatDate, months, yearGenerator, stateOptions} from '../../utils/utilFunc'
 
-//year generator
-var min = new Date("03/11/2010").getFullYear(),
-    max = new Date().getFullYear();
-let years = [];
-for (var i = min; i<=max; i++){
-    years.push({ key : i, text:i, value:i});
-}
-//YYYY-MM-DD to DD-MM-YYYY
-function reformatDate(dateStr)
-{
-  let dArr = dateStr.split("-");  // ex input "2010-01-18"
-  return dArr[2]+ "/" +dArr[1]+ "/" +dArr[0]; //ex out: "18/01/10"
-}
 
 
 class Profile extends Component {
@@ -36,7 +24,10 @@ class Profile extends Component {
          open : false,
          name : '',
          date : '',
-         updateClass : ''
+         updateClass : '',
+         feesOpen : false,
+         submit_date:'',
+         include :''
      }
 
  }
@@ -74,21 +65,34 @@ class Profile extends Component {
         this.setState({[name] : value});
  }
 
+ includeHandler = (e,data) => {
+    const {  value } = data;
+    this.setState({include : value})
+ }
+
  profileUpdateHandler = async(studentId) => {
      const { name,date,updateClass } = this.state;
      await this.props.updateStudent({name,date,updateClass,studentId})
      this.close();
  }
 
+ submitfeesChandler = async(studentId) => {
+    const { submit_date, include } = this.state;
+    await this.props.submitFees({submit_date,include,studentId})
+    this.feesClose();
+ }
 
  show = () => this.setState({open: true })
  close = () => this.setState({ open: false })
+
+ feesShow = () => this.setState({feesOpen: true })
+ feesClose = () => this.setState({ feesOpen: false })
 
     
  render(){
 
     const { classAndStudentId ,checkAll, dateFilter,monthAndYear,open,
-            name,date,updateClass
+            name,date,updateClass,feesOpen,submit_date
     } = this.state ;
 
     const [ classId, studentId ] = classAndStudentId.split('$');
@@ -100,7 +104,9 @@ class Profile extends Component {
     const selectedStudent = studentOfClassId.filter(student => {
         return student._id == studentId
     })
-    console.log(name,date,updateClass)
+   
+    const years = yearGenerator();
+    console.log(submit_date);
 
     return (
         <div>
@@ -128,7 +134,7 @@ class Profile extends Component {
                 </div><br/>
                 <div>
                 <Button className="profile-edit" onClick={this.show}>Edit Profile</Button>
-                <Button className="profile-edit" onClick={this.show}>Submit Fees</Button>
+                <Button className="profile-edit" onClick={this.feesShow}>Submit Fees</Button>
                 </div>
             </div>
             <div className="profile-fees-status">
@@ -204,6 +210,29 @@ class Profile extends Component {
                 </Form>
                </Modal.Content> 
             </Modal>
+            <Modal size="tiny" open={feesOpen} onClose={this.feesClose}>
+            <Modal.Header>Submit Fees</Modal.Header>
+            <Modal.Content>
+                <Form  >
+                    <Input type="date" placeholder="joining date" name="submit_date" required
+                            className="profile-input-modal" value={submit_date} onChange={this.profileChangeHandler} />
+                    <Dropdown
+                            placeholder='State'
+                            fluid
+                            multiple
+                            search
+                            selection
+                            options={stateOptions}
+                            onChange={this.includeHandler}
+                            required
+                            className="profile-dropdown-modal"
+                        /><br/>
+                    <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}
+                      onClick={() => this.submitfeesChandler(selectedStudent[0]._id)}>Submit</Button> &nbsp;&nbsp;
+                    <Button onClick={this.feesClose} style={{ background : "#db2828", color : "#fff"}}>Cancel</Button>
+                </Form>
+               </Modal.Content> 
+            </Modal>
         </div>
     );
  }
@@ -215,74 +244,13 @@ const mapStateToProps = state => ({
 
   const mapActionToProps = () => {
     return {
-        updateStudent
+        updateStudent,submitFees
     }
 }
 
 
 export default withRouter(connect(mapStateToProps,mapActionToProps())(Profile))
 
-const months = [
-	{
-        "key": "Jan",
-        "text" : "January",
-		"value": "01"
-	},
-	{
-        "key": "Feb",
-        "text" : "February",
-		"value": "02"
-	},
-	{
-        "key": "Mar",
-        "text" : "March",
-		"value": "03"
-	},
-	{
-        "key": "Apr",
-        "text" : "April",
-		"value": "04"
-	},
-	{
-        "key": "May",
-        "text" : "May",
-		"value": "05"
-	},
-	{
-        "key": "Jun",
-        "text" : "June",
-		"value": "06"
-	},
-	{
-        "key": "Jul",
-        "text" : "July",
-		"value": "07"
-	},
-	{
-        "key": "Aug",
-        "text" : "August",
-		"value": "08"
-	},
-	{
-        "key": "Sep",
-        "text" : "September",
-		"value": "09"
-	},
-	{
-        "key": "Oct",
-        "text" : "October",
-		"value": "10"
-	},
-	{
-        "key": "Nov",
-        "text" : "November",
-		"value": "11"
-	},
-	{
-        "key": "Dec",
-        "text" : "December",
-		"value": "12"
-	}
-]
+
 
 
