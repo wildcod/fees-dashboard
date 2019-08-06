@@ -174,7 +174,7 @@ class Profile extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        {checkAll && selectedStudent[0].submit_date_and_include.map((record,i) => {
+                        {checkAll &&  (selectedStudent[0].submit_date_and_include.length > 0) && selectedStudent[0].submit_date_and_include.map((record,i) => {
                             return  <Table.Row key={record._id}>
                                         <Table.Cell>{i+1}</Table.Cell>
                                         <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
