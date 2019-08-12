@@ -73,7 +73,7 @@ class Profile extends Component {
  profileUpdateHandler = async(studentId) => {
      const { name,date,updateClass } = this.state;
      await this.props.updateStudent({name,date,updateClass,studentId})
-     this.close();
+     this.props.history.push('/profile/' + updateClass)
  }
 
  submitfeesChandler = async(studentId) => {
@@ -174,22 +174,27 @@ class Profile extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        {checkAll &&  (selectedStudent[0].submit_date_and_include.length > 0) && selectedStudent[0].submit_date_and_include.map((record,i) => {
+                        { (checkAll &&  (selectedStudent[0].submit_date_and_include.length > 1)) && selectedStudent[0].submit_date_and_include.map((record,i) => {
+                            
                             return  <Table.Row key={record._id}>
                                         <Table.Cell>{i+1}</Table.Cell>
-                                        <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
+                                        <Table.Cell>{ reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
                                         <Table.Cell>{record.include.toString()}</Table.Cell>
                                     </Table.Row>
+                            
                         })}
-                        {dateFilter && selectedStudent[0].submit_date_and_include.filter(record => {
+                        { (dateFilter && (selectedStudent[0].submit_date_and_include.length > 1)) && selectedStudent[0].submit_date_and_include.filter(record => {
+                           
                             const date  = reformatDate(record.submit_date.substring(0,10))
                             return date.substring(3) == monthAndYear
-                        }).map((record,i) => {
+                            
+                        }).map((record,i) => { 
                             return  <Table.Row key={record._id}>
                                         <Table.Cell>{i+1}</Table.Cell>
                                         <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
                                         <Table.Cell>{record.include.toString()}</Table.Cell>
                                     </Table.Row>
+                            
                         })
                      }
                     </Table.Body>
@@ -200,11 +205,11 @@ class Profile extends Component {
             <Modal.Header>Edit Profile</Modal.Header>
             <Modal.Content>
                 <Form  >
-                    <Input type="text" placeholder="first name" name="name"
+                    <Input type="text" placeholder="first name" name="name" 
                             className="profile-input-modal" value={name} onChange={this.profileChangeHandler}/>
-                    <Input type="date" placeholder="joining date" name="date"
+                    <Input type="date" placeholder="joining date" name="date" 
                             className="profile-input-modal" value={date} onChange={this.profileChangeHandler} />
-                    <Input type="text" placeholder="class" name="updateClass"
+                    <Input type="text" placeholder="class" name="updateClass" 
                              className="profile-input-modal" value={updateClass} onChange={this.profileChangeHandler} /><br/>
                     <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}
                       onClick={() => this.profileUpdateHandler(selectedStudent[0]._id)}>Submit</Button> &nbsp;&nbsp;

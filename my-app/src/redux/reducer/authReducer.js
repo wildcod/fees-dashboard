@@ -9,7 +9,8 @@ import {
     LOGOUT_SUCCESS,
     DELETE_STUDENT,
     UPDATE_STUDENT,
-    CREATE_STUDENT
+    CREATE_STUDENT,
+    FEES_STUDENT
 } from '../types'
 
 
@@ -79,7 +80,7 @@ const initialState = {
                         ...state,
                         students : students
                     } 
-       case UPDATE_STUDENT: 
+       case FEES_STUDENT: 
                     let newStudents = state.students
                     newStudents.find((o, i) => {
                       if (o._id == action.payload.result._id) {

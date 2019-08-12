@@ -127,18 +127,18 @@ export const submitFees = ({submit_date,include,studentId})  => async(dispatch) 
           }
 
           const res = await axios.patch(api('updateSubmitDate', studentId), feesField);
-    
+          console.log(res.data);
 
           dispatch({
             type : FEES_STUDENT,
             payload : {
-               result : res.result
+               result : res.data.result
             }
         })          
 
       }catch(e){
         dispatch(
-            returnErrors(e.response.data, e.response.status, 'SUBMIT_FEES_ERROR')
+            returnErrors(e, e, 'SUBMIT_FEES_ERROR')
           );
     }
 

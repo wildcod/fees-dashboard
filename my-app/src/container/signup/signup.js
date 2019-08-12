@@ -3,6 +3,7 @@ import Header from '../../component/common/header/header'
 import './signup.css'
 
 import {connect} from 'react-redux' 
+import { withRouter } from "react-router";
 import {initiateSignup} from '../../redux/actions/authAction'
 
 class Signup extends Component {
@@ -23,8 +24,8 @@ class Signup extends Component {
         e.preventDefault();
         const { firstname , lastname, email, password} = this.state
         const name = firstname + ' ' + lastname;
-       const res = await this.props.initiateSignup({name , email, password});
-       console.log(res)
+        await this.props.initiateSignup({name , email, password});
+        this.props.history.push('/login');
       }
 
    
@@ -61,4 +62,4 @@ const mapActionToProps = () => {
     }
 }
 
-export default connect(mapStateToProps,mapActionToProps())(Signup)
+export default withRouter(connect(mapStateToProps,mapActionToProps())(Signup))

@@ -34,8 +34,11 @@ class AllCLass extends Component {
         const {firstName,lastName,joiningDate,classOfStudent} = this.state;
         const { userId} = this.props
         const name = firstName + ' ' + lastName;
+        if(name.length > 0 && lastName.length > 0 && joiningDate.length > 0 && classOfStudent.length > 0
+            && userId.length > 0){
        await this.props.createStudent({name,joiningDate,classOfStudent,userId});
         this.close();
+            }
     }
 
     show = () => this.setState({open: true })
