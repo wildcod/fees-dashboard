@@ -40,12 +40,13 @@ table {
 }
 
 .profile-month-dropdown{
-  width: 10% !important;
+  width: 17% !important;
   height: 20px !important;
 }
 
 .profile-fees-table{
   display: block !important;
+  width: 55% !important;
 }
 
 .profile-dropdown{
@@ -63,4 +64,22 @@ table {
   width : 95% !important;
   margin-left: 22px !important;
   margin-bottom: 30px !important;
+}
+
+
+@media screen and (max-width : 576px){
+  .profile-month-dropdown{
+    width: 60% !important;
+  }
+  .profile-fees-table{
+    width: 100% !important;
+  }
+  .profile-table{
+    width: 80%;
+  }
+  #rw{
+    display: flex !important;
+    justify-content: center !important;
+  }
+ 
 }

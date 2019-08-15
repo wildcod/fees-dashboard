@@ -33,7 +33,7 @@ class Login extends Component {
    
     render(){
         return <div>
-                    <Header />
+                    {/* <Header /> */}
                     <div className="login-body">
                         <div className="login-container">
                             <div className="login-head">Login</div>

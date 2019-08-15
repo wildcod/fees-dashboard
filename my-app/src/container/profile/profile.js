@@ -24,7 +24,7 @@ class Profile extends Component {
          open : false,
          name : '',
          date : '',
-         updateClass : '',
+         updateClass : this.props.match.params["classAndStudentId"].split('$')[0],
          feesOpen : false,
          submit_date: '',
          include : ''
@@ -49,11 +49,13 @@ class Profile extends Component {
      const monthAndYear = month + '/' + year;
      this.setState({ monthAndYear : monthAndYear , checkAll : false })  
  }
-
+componentDidMount(){
+    console.log(this.props);
+}
  shouldComponentUpdate(nextProps,nexState) {
     const propsDifference = this.props.students !== nextProps.students;
     const stateDifference = this.state !== nexState;
-    return stateDifference || propsDifference
+    return stateDifference || propsDifference 
 }
 
  checkAllHandler = () => {
@@ -71,9 +73,9 @@ class Profile extends Component {
  }
 
  profileUpdateHandler = async(studentId) => {
-     const { name,date,updateClass } = this.state;
+     const { name,date,updateClass ,classAndStudentId} = this.state;
      await this.props.updateStudent({name,date,updateClass,studentId})
-     this.props.history.push('/profile/' + updateClass)
+     this.close();  
  }
 
  submitfeesChandler = async(studentId) => {
@@ -164,9 +166,9 @@ class Profile extends Component {
             </div>
          
                 <div className="profile-fees-table">
-                <Table celled>
+                <Table celled >
                     <Table.Header>
-                    <Table.Row>
+                    <Table.Row id="rw">
                         <Table.HeaderCell>Serial No</Table.HeaderCell>
                         <Table.HeaderCell>Submit Date</Table.HeaderCell>
                         <Table.HeaderCell>Include</Table.HeaderCell>
@@ -174,22 +176,22 @@ class Profile extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        { (checkAll &&  (selectedStudent[0].submit_date_and_include.length > 1)) && selectedStudent[0].submit_date_and_include.map((record,i) => {
+                        { (checkAll &&  (selectedStudent[0].submit_date_and_include.length > 0)) && selectedStudent[0].submit_date_and_include.map((record,i) => {
                             
-                            return  <Table.Row key={record._id}>
+                            return  <Table.Row key={record._id} id="rw">
                                         <Table.Cell>{i+1}</Table.Cell>
                                         <Table.Cell>{ reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
                                         <Table.Cell>{record.include.toString()}</Table.Cell>
                                     </Table.Row>
                             
                         })}
-                        { (dateFilter && (selectedStudent[0].submit_date_and_include.length > 1)) && selectedStudent[0].submit_date_and_include.filter(record => {
+                        { (dateFilter && (selectedStudent[0].submit_date_and_include.length > 0)) && selectedStudent[0].submit_date_and_include.filter(record => {
                            
                             const date  = reformatDate(record.submit_date.substring(0,10))
                             return date.substring(3) == monthAndYear
                             
                         }).map((record,i) => { 
-                            return  <Table.Row key={record._id}>
+                            return  <Table.Row key={record._id} id="rw">
                                         <Table.Cell>{i+1}</Table.Cell>
                                         <Table.Cell>{reformatDate(record.submit_date.substring(0,10))}</Table.Cell>
                                         <Table.Cell>{record.include.toString()}</Table.Cell>
@@ -210,7 +212,7 @@ class Profile extends Component {
                     <Input type="date" placeholder="joining date" name="date" 
                             className="profile-input-modal" value={date} onChange={this.profileChangeHandler} />
                     <Input type="text" placeholder="class" name="updateClass" 
-                             className="profile-input-modal" value={updateClass} onChange={this.profileChangeHandler} /><br/>
+                             className="profile-input-modal" value={updateClass}  /><br/>
                     <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}
                       onClick={() => this.profileUpdateHandler(selectedStudent[0]._id)}>Submit</Button> &nbsp;&nbsp;
                     <Button onClick={this.close} style={{ background : "#db2828", color : "#fff"}}>Cancel</Button>

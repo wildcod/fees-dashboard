@@ -31,7 +31,7 @@ class Signup extends Component {
    
     render(){
         return <div>
-                <Header />
+                {/* <Header /> */}
                 <div className="signup-body">
                     <div className="signup-container">
                         <div className="signup-head">Signup</div>

@@ -74,3 +74,13 @@
 .fas{
     cursor: pointer;
 }
+
+@media screen and (max-width : 576px){
+    .students-list-container{
+        display: flex;
+        justify-content: center;
+    }
+    .students-list-items{
+        width: 90%;
+    }
+}

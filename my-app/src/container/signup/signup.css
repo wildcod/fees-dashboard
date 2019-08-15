@@ -55,3 +55,28 @@
     background-color: #ffffff;
     color: #1FC7A8;
 }
+
+/* // Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) { 
+    ...
+ } */
+
+ /* Medium devices (tablets, 768px and up) */
+/* @media (min-width: 768px) { ... } */
+
+ /* Large devices (desktops, 992px and up) */
+/* @media (min-width: 992px) { ... } */
+
+ /* Extra large devices (large desktops, 1200px and up) */
+/* @media (min-width: 1200px) { ... } */
+
+@media screen and (max-width : 576px){
+    .btn{
+        width : 140px;
+        font-size: 21px;
+        height: 42px;
+    }
+    .signup-head{
+        font-size: 40px;
+    }
+}

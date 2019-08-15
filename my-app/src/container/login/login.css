@@ -55,3 +55,14 @@
     background-color: #ffffff;
     color: #1FC7A8;
 }
+
+@media screen and (max-width : 576px){
+    .btn{
+        width : 140px;
+        font-size: 21px;
+        height: 42px;
+    }
+    .login-head{
+        font-size: 40px;
+    }
+}

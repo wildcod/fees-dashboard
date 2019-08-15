@@ -55,7 +55,7 @@ class AllCLass extends Component {
             <div className="class-nav">
                   <div className="class-nav-heading">Classes</div>    
             </div>
-            <button className="class-nav-btn" onClick={this.show} ><span className="class-nav-btn-content">create +</span></button>
+           
             <div className="class-main">
                 <div className="class-main-content">
                         <select className="class-dropdown-field"
@@ -75,6 +75,10 @@ class AllCLass extends Component {
                         <button className="class-btn">Submit</button>
                     </div>
                 </div>
+            </div>
+            <br/>
+            <div className="class-nav-create-btn">
+            <button className="class-nav-btn" onClick={this.show} ><span className="class-nav-btn-content">create +</span></button>
             </div>
             <Modal size="tiny" open={open} onClose={this.close}>
             <Modal.Header>Create Student</Modal.Header>
