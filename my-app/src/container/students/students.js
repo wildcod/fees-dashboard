@@ -51,10 +51,19 @@ class Students extends Component {
     
         const students = studentOfClassId.map(student => {
             let classStatus = "students-status-false";
-    
-            if(student.status){
+            let res = false
+            var today = new Date();
+            var date = (today.getMonth()+1)+'/'+today.getFullYear();
+            
+            res = student["submit_date_and_include"].find(function(e){
+                var submitDate = new Date(e.submit_date)
+                    let modifiedSubmitDate = (submitDate.getMonth() + 1) + '/' + submitDate.getFullYear()
+                      return modifiedSubmitDate == date
+                    })
+            if(res && res.submit_date.length > 0){
                 classStatus = "students-status-true"
             }
+
             return  <div className="students-list-items" key={student._id}>
                             <div className="students-name" onClick={() => this.handleName(student._id)}>{student.name.capitalize()}</div>
                             <div className="students-update">

@@ -76,3 +76,20 @@ export const initiateLogin = ({email, password}) => async(dispatch) => {
     }
 
 }
+
+export const initiateLogout = () => async(dispatch) => {
+
+    try{
+
+        dispatch({
+            type : LOGOUT_SUCCESS 
+        })
+
+    }catch(e){
+
+            dispatch(
+                returnErrors(e.response.data, e.response.status, 'SIGNOUT_FAIL')
+              );
+    }
+
+}

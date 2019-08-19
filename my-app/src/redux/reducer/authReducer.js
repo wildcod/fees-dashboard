@@ -23,7 +23,7 @@ const initialState = {
     signedUp : false,
     requestingSignup : false,
     loggedIn : false,
-    students : []
+    students : [],
 }
 
   export default function(state = initialState, action) {

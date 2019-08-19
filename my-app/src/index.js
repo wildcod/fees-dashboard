@@ -4,20 +4,48 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createStore,compose,applyMiddleware} from 'redux'
-import reducer from '../src/redux/reducer/index'
+import rootReducer from '../src/redux/reducer/index'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' 
 import { PersistGate } from 'redux-persist/integration/react'
+import  expireReducer from 'redux-persist-expire';
+
 
 
 const persistConfig = {
     key: 'root',
     storage,
+    // transforms :[
+    //     expireReducer('errorStore', {
+    //         expireSeconds: 180,
+    //         expiredState: {
+    //             msg: {},
+    //             status: null,
+    //             id: null
+    //         },
+    //         autoExpire: true
+    //     }),
+    //     expireReducer('authStore', {
+    //         expireSeconds: 1800,
+    //         expiredState: {
+    //             email : '',
+    //             name : '',
+    //             _id : '',
+    //             token: null,
+    //             requestingLogin : false,
+    //             signedUp : false,
+    //             requestingSignup : false,
+    //             loggedIn : false,
+    //             students : [],
+    //         },
+    //         autoExpire: true
+    //     })
+    // ]
   }
 
-  const persistedReducer = persistReducer(persistConfig, reducer)
+  const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 
 const logger = store => {

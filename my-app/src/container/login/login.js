@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Header from '../../component/common/header/header'
 import './login.css'
 
 import { connect } from 'react-redux'
@@ -8,14 +7,19 @@ import { initiateLogin } from '../../redux/actions/authAction'
 
 class Login extends Component {
 
-    state = {
-        email : '',
-        password : ''
+    constructor(props){
+        super(props);
+        this.state = {
+            email : '',
+            password : '',
+            errorMessageStatus : false
+        }
     }
 
     componentDidMount(){
         console.log(this.props)
     }
+
 
     allChangeHandler = (e) => {
         const {name,value} = e.target
@@ -24,16 +28,21 @@ class Login extends Component {
 
     handleLogin = async(e) => {
         e.preventDefault();
+        this.setState({errorMessageStatus : false})
         const { email, password } = this.state
         await this.props.initiateLogin({email, password})
         if(this.props.loggedIn){
            this.props.history.push('/classes')
+        }else{
+            this.setState({errorMessageStatus : true})
         }
     }
    
     render(){
         return <div>
-                    {/* <Header /> */}
+                    { this.state.errorMessageStatus &&
+                     <div className="login-status">Login Failed</div>
+                    }
                     <div className="login-body">
                         <div className="login-container">
                             <div className="login-head">Login</div>
@@ -51,7 +60,7 @@ class Login extends Component {
     }
 
 const mapStateToProps = state => ({
-    loggedIn: state.authStore.loggedIn,
+    loggedIn: state.authStore.loggedIn
   });
 
 
