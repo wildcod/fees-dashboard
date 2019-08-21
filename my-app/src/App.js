@@ -8,23 +8,32 @@ import AllClass from './container/all-class/all-class'
 import Profile from './container/profile/profile'
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Students from './container/students/students';
+import  ProtectedRoutes from './protectedRoutes/protectedRoutes'
+import { connect } from 'react-redux'
 
-function App() {
+class App extends React.Component {
+  render(){
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route exact path="/" component={Home}/>
-          <Route path="/classes" component={AllClass} />
-          <Route path="/students/:classId" component={Students}/>
-          <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
-          <Route path="/profile/:classAndStudentId" component={Profile} />
+          <Route path="/signup" component={Signup} />
+          <ProtectedRoutes path="/classes" component={AllClass} loggedIn={this.props.loggedIn} />
+          <ProtectedRoutes path="/students/:classId" component={Students} loggedIn={this.props.loggedIn} />
+          <ProtectedRoutes path="/profile/:classAndStudentId" component={Profile} loggedIn={this.props.loggedIn} />
           <Route component={NotFound} />
           </Switch>
       </Router>
     </div>
   );
 }
+}
 
-export default App;
+const mapStateToProps = state => ({
+  loggedIn: state.authStore.loggedIn,
+});
+
+
+export default connect(mapStateToProps)(App);

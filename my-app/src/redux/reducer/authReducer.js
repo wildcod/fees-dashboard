@@ -102,7 +102,7 @@ const initialState = {
           email : '',
           name : '',
           _id : '',
-          students : null,
+          students : [],
           requestingLogin: false,
           requestingSignup: false,
           loggedIn : false,

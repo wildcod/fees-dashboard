@@ -121,17 +121,19 @@ componentDidMount(){
                         <thead>
                             <tr>
                                 <td>Name</td>
-                                <td >{selectedStudent[0].name}</td>
+                                {/* <td >{selectedStudent[0].name}</td> */}
+                                {selectedStudent[0] && <td>{selectedStudent[0].name}</td>   }
                             </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>class</td>
-                            <td>{selectedStudent[0].class_name}</td>
+                             {/* <td>{selectedStudent[0].class_name}</td> */}
+                         {selectedStudent[0] && <td>{selectedStudent[0].class_name}</td>   }
                         </tr>
                         <tr>
                             <td>Joining Date</td>
-                            <td>{reformatDate(selectedStudent[0].joining_date.substring(0,10))}</td>
+                            <td>{ selectedStudent[0] &&  reformatDate(selectedStudent[0].joining_date.substring(0,10))}</td>
                         </tr>
                         </tbody>
                     </table>

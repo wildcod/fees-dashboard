@@ -17,32 +17,32 @@ import  expireReducer from 'redux-persist-expire';
 const persistConfig = {
     key: 'root',
     storage,
-    // transforms :[
-    //     expireReducer('errorStore', {
-    //         expireSeconds: 180,
-    //         expiredState: {
-    //             msg: {},
-    //             status: null,
-    //             id: null
-    //         },
-    //         autoExpire: true
-    //     }),
-    //     expireReducer('authStore', {
-    //         expireSeconds: 1800,
-    //         expiredState: {
-    //             email : '',
-    //             name : '',
-    //             _id : '',
-    //             token: null,
-    //             requestingLogin : false,
-    //             signedUp : false,
-    //             requestingSignup : false,
-    //             loggedIn : false,
-    //             students : [],
-    //         },
-    //         autoExpire: true
-    //     })
-    // ]
+    transforms :[
+        expireReducer('errorStore', {
+            expireSeconds: 180,
+            expiredState: {
+                msg: {},
+                status: null,
+                id: null
+            },
+            autoExpire: true
+        }),
+        expireReducer('authStore', {
+            expireSeconds: 1800,
+            expiredState: {
+                email : '',
+                name : '',
+                _id : '',
+                token: null,
+                requestingLogin : false,
+                signedUp : false,
+                requestingSignup : false,
+                loggedIn : false,
+                students : [],
+            },
+            autoExpire: true
+        })
+    ]
   }
 
   const persistedReducer = persistReducer(persistConfig, rootReducer)
