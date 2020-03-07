@@ -6,6 +6,6 @@ const NotFound = () => {
             404 page Not found
         </div>
     );
-}
+};
 
 export default NotFound

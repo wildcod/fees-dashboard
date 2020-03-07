@@ -43,9 +43,9 @@ const persistConfig = {
             autoExpire: true
         })
     ]
-  }
+  };
 
-  const persistedReducer = persistReducer(persistConfig, rootReducer)
+  const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 const logger = store => {
@@ -53,7 +53,7 @@ const logger = store => {
         return action => {
              console.log("[Middleware] Dispatching" , action);
              const result = next(action);
-             console.log("[Middleware] next state" , store.getState())
+             console.log("[Middleware] next state" , store.getState());
              
              return result;
         }
@@ -63,7 +63,7 @@ const logger = store => {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(persistedReducer,composeEnhancers(applyMiddleware(logger,thunk)))
-let persistor = persistStore(store)
+let persistor = persistStore(store);
 
 ReactDOM.render( 
     <Provider store={store}>

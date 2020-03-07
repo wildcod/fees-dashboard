@@ -2,3 +2,4 @@ node_modules
 .idea
 nodemon.json
 package-lock.json
+yarn.lock

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import Header from '../../component/common/header/header'
 import './signup.css'
 
@@ -6,50 +6,54 @@ import {connect} from 'react-redux'
 import { withRouter } from "react-router";
 import {initiateSignup} from '../../redux/actions/authAction'
 
-class Signup extends Component {
+const Signup = props => {
 
-    state = {
-        firstname : '',
-        lastname : '',
-        email : '',
-        password : ''
-    }
+    const { firstName, setFirstName } = useState('');
+    const { lastName , setLastName } = useState('');
+    const { email , setEmail } = useState('');
+    const { password , setPassword } = useState('');
 
-    allChangeHandler = (e) => {
-        const {name,value} = e.target
-        this.setState({ [name] : value})
-    }
 
-    handleSubmit = async(e) => {
-        e.preventDefault();
-        const { firstname , lastname, email, password} = this.state
-        const name = firstname + ' ' + lastname;
-        await this.props.initiateSignup({name , email, password});
-        this.props.history.push('/login');
-      }
-
-   
-    render(){
-        return <div>
-                {/* <Header /> */}
-                <div className="signup-body">
-                    <div className="signup-container">
-                        <div className="signup-head">Signup</div>
-                        <div className="signup-main">
-                            <form onSubmit={this.handleSubmit}>
-                                <input type="text" required className="input" name="firstname" value={this.state.firstname} placeholder="First Name" onChange={this.allChangeHandler}/>
-                                <input type="text" required className="input" placeholder="Last Name" name="lastname" value={this.state.lastname} onChange={this.allChangeHandler} />
-                                <input type="text" required className="input" placeholder="Email" name="email" value={this.state.email} onChange={this.allChangeHandler}/>
-                                <input type="password" required className="input" placeholder="Password" name="password" value={this.state.password} onChange={this.allChangeHandler}/>
-                                <input type="submit" value="Submit" className="btn" /> 
-                            </form>
-                        </div>
-                    </div>
-                 </div>
-                </div>
+    const allChangeHandler = (e) => {
+        const { name, value } = e.target;
+        switch(name){
+            case "firstName" : setFirstName(value);
+                               return;
+            case "lastName" : setLastName(value);
+                                return;
+            case "email" : setEmail(value);
+                                return;
+            case "password" : setPassword(value);
+                                return;
+            default : return;
         }
+    };
 
-}
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        const name = firstName + ' ' + lastName;
+        await props.initiateSignup({name , email, password});
+        props.history.push('/login');
+      };
+
+    return <div>
+            {/* <Header /> */}
+            <div className="signup-body">
+                <div className="signup-container">
+                    <div className="signup-head">Signup</div>
+                    <div className="signup-main">
+                        <form onSubmit={handleSubmit}>
+                            <input type="text" required className="input" name="firstName" value={firstName} placeholder="First Name" onChange={allChangeHandler}/>
+                            <input type="text" required className="input" placeholder="Last Name" name="lastName" value={lastName} onChange={allChangeHandler} />
+                            <input type="text" required className="input" placeholder="Email" name="email" value={email} onChange={allChangeHandler}/>
+                            <input type="password" required className="input" placeholder="Password" name="password" value={password} onChange={allChangeHandler}/>
+                            <input type="submit" value="Submit" className="btn" />
+                        </form>
+                    </div>
+                </div>
+             </div>
+            </div>
+};
 
 const mapStateToProps = state => ({
     signedUp: state.authStore.signedUp,

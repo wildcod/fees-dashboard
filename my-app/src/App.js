@@ -11,8 +11,7 @@ import Students from './container/students/students';
 import  ProtectedRoutes from './protectedRoutes/protectedRoutes'
 import { connect } from 'react-redux'
 
-class App extends React.Component {
-  render(){
+const App = props => {
   return (
     <div className="App">
       <Router>
@@ -20,16 +19,15 @@ class App extends React.Component {
           <Route exact path="/" component={Home}/>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <ProtectedRoutes path="/classes" component={AllClass} loggedIn={this.props.loggedIn} />
-          <ProtectedRoutes path="/students/:classId" component={Students} loggedIn={this.props.loggedIn} />
-          <ProtectedRoutes path="/profile/:classAndStudentId" component={Profile} loggedIn={this.props.loggedIn} />
+          <ProtectedRoutes path="/classes" component={AllClass} loggedIn={props.loggedIn} />
+          <ProtectedRoutes path="/students/:classId" component={Students} loggedIn={props.loggedIn} />
+          <ProtectedRoutes path="/profile/:classAndStudentId" component={Profile} loggedIn={props.loggedIn} />
           <Route component={NotFound} />
           </Switch>
       </Router>
     </div>
   );
-}
-}
+};
 
 const mapStateToProps = state => ({
   loggedIn: state.authStore.loggedIn,

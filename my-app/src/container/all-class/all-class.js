@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { useState } from 'react'
 import Header from '../../component/common/header/header'
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
@@ -6,48 +6,47 @@ import { Modal, Form, Button, Input} from 'semantic-ui-react'
 import { createStudent} from '../../redux/actions/studentAction'
 import './all-class.css'
 
-class AllCLass extends Component {
+const AllCLass = props => {
 
-    state = {
-        selectValue : "",
-        open : false,
-        firstName : '',
-        lastName : '',
-        joiningDate : '',
-        classOfStudent : ''
-    }
+    const { firstName, setFirstName } = useState('');
+    const { lastName , setLastName } = useState('');
+    const { selectValue , setSelectValue } = useState('');
+    const { joiningDate , setJoiningDate } = useState('');
+    const { classOfStudent , setClassOfStudent } = useState('');
+    const { open , setOpen } = useState(false);
 
-    componentDidMount(){
-        console.log(this.props)
-    }
 
-    handleChange = (e) => {  
-        this.props.history.push('/students/'+ e.target.value)
-    }
+    const handleChange = (e) => {
+       props.history.push('/students/'+ e.target.value)
+    };
 
-    changeHandler = (e) => {
+   const changeHandler = (e) => {
         const { name, value } = e.target;
-        this.setState({[name] : value});
-    }
+       switch(name){
+           case "firstName" : setFirstName(value);
+               return;
+           case "lastName" : setLastName(value);
+               return;
+           case "joiningDate" : setJoiningDate(value);
+               return;
+           case "classOfStudent" : setClassOfStudent(value);
+               return;
+           default : return;
+       }
+    };
 
-    createStudentHandler = async(e) => {
-        const {firstName,lastName,joiningDate,classOfStudent} = this.state;
-        const { userId} = this.props
+    const show = () => setOpen(true);
+    const close = () => setOpen(false);
+
+   const createStudentHandler = async(e) => {
+        const { userId } = props;
         const name = firstName + ' ' + lastName;
-        if(name.length > 0 && lastName.length > 0 && joiningDate.length > 0 && classOfStudent.length > 0
-            && userId.length > 0){
-       await this.props.createStudent({name,joiningDate,classOfStudent,userId});
-        this.close();
+        if(name.length > 0 && lastName.length > 0 && joiningDate.length > 0 && classOfStudent.length > 0 && userId.length > 0)
+           {
+               await props.createStudent({name,joiningDate,classOfStudent,userId});
+                       close();
             }
-    }
-
-    show = () => this.setState({open: true })
-    close = () => this.setState({ open: false })
-
-
-    render(){ 
-
-        const { firstName, lastName, joiningDate, classOfStudent, open} = this.state
+    };
 
     return (
         <div>
@@ -55,22 +54,17 @@ class AllCLass extends Component {
             <div className="class-nav">
                   <div className="class-nav-heading">Classes</div>    
             </div>
-           
             <div className="class-main">
                 <div className="class-main-content">
                         <select className="class-dropdown-field"
-                                value={this.state.selectValue} 
-                                onChange={this.handleChange} 
+                                value={selectValue}
+                                onChange={handleChange}
                         >
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
+                            {
+                                [4, 5, 6, 7, 8, 9, 10, 11, 12].map((data,i) => {
+                                             return <option value={data} key={i}>{data}</option>
+                                })
+                            }
                         </select>
                     <div>
                         <button className="class-btn">Submit</button>
@@ -79,30 +73,30 @@ class AllCLass extends Component {
             </div>
             <br/>
             <div className="class-nav-create-btn">
-            <button className="class-nav-btn" onClick={this.show} ><span className="class-nav-btn-content">create +</span></button>
+            <button className="class-nav-btn" onClick={show} ><span className="class-nav-btn-content">Create +</span></button>
             </div>
-            <Modal size="tiny" open={open} onClose={this.close}>
+            <Modal size="tiny" open={open} onClose={close}>
             <Modal.Header>Create Student</Modal.Header>
             <Modal.Content>
                 <Form>
                     <Input type="text" placeholder="first name" name="firstName"
-                            className="profile-input-modal" value={firstName} onChange={this.changeHandler} required/>
+                            className="profile-input-modal" value={firstName} onChange={changeHandler} required/>
                     <Input type="text" placeholder="last name" name="lastName"
-                            className="profile-input-modal" value={lastName} onChange={this.changeHandler} required/>
+                            className="profile-input-modal" value={lastName} onChange={changeHandler} required/>
                     <Input type="date" placeholder="joining date" name="joiningDate"
-                            className="profile-input-modal" value={joiningDate} onChange={this.changeHandler} required/>
+                            className="profile-input-modal" value={joiningDate} onChange={changeHandler} required/>
                     <Input type="number" placeholder="class" name="classOfStudent" min="1" max="12"
-                             className="profile-input-modal" value={classOfStudent} onChange={this.changeHandler} required /><br/>
+                             className="profile-input-modal" value={classOfStudent} onChange={changeHandler} required /><br/>
                     <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}
-                      onClick={this.createStudentHandler}>Submit</Button> &nbsp;&nbsp;
-                    <Button onClick={this.close} style={{ background : "#db2828", color : "#fff"}}>Cancel</Button>
+                      onClick={createStudentHandler}>Submit</Button> &nbsp;&nbsp;
+                    <Button onClick={close} style={{ background : "#db2828", color : "#fff"}}>Cancel</Button>
                 </Form>
                </Modal.Content> 
             </Modal>
         </div>
     );
-    }
-}
+};
+
 
 const mapStateToProps = state => ({
     userId: state.authStore._id,
@@ -112,6 +106,6 @@ const mapActionToProps = () => {
     return {
         createStudent
     }
-}
+};
 
 export default withRouter(connect(mapStateToProps,mapActionToProps())(AllCLass))
