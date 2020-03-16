@@ -8,26 +8,11 @@ import {initiateSignup} from '../../redux/actions/authAction'
 
 const Signup = props => {
 
-    const { firstName, setFirstName } = useState('');
-    const { lastName , setLastName } = useState('');
-    const { email , setEmail } = useState('');
-    const { password , setPassword } = useState('');
+    const [ firstName, setFirstName ] = useState('');
+    const [ lastName , setLastName ] = useState('');
+    const [ email , setEmail ] = useState('');
+    const [ password , setPassword ] = useState('');
 
-
-    const allChangeHandler = (e) => {
-        const { name, value } = e.target;
-        switch(name){
-            case "firstName" : setFirstName(value);
-                               return;
-            case "lastName" : setLastName(value);
-                                return;
-            case "email" : setEmail(value);
-                                return;
-            case "password" : setPassword(value);
-                                return;
-            default : return;
-        }
-    };
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -43,10 +28,10 @@ const Signup = props => {
                     <div className="signup-head">Signup</div>
                     <div className="signup-main">
                         <form onSubmit={handleSubmit}>
-                            <input type="text" required className="input" name="firstName" value={firstName} placeholder="First Name" onChange={allChangeHandler}/>
-                            <input type="text" required className="input" placeholder="Last Name" name="lastName" value={lastName} onChange={allChangeHandler} />
-                            <input type="text" required className="input" placeholder="Email" name="email" value={email} onChange={allChangeHandler}/>
-                            <input type="password" required className="input" placeholder="Password" name="password" value={password} onChange={allChangeHandler}/>
+                            <input type="text" required className="input" name="firstName" value={firstName} placeholder="First Name" onChange={(e) => setFirstName(e.target.value)}/>
+                            <input type="text" required className="input" placeholder="Last Name" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            <input type="text" required className="input" placeholder="Email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            <input type="password" required className="input" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             <input type="submit" value="Submit" className="btn" />
                         </form>
                     </div>

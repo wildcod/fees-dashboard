@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './login.css'
 
 import { connect } from 'react-redux'
@@ -6,19 +6,12 @@ import { withRouter } from "react-router";
 import { initiateLogin } from '../../redux/actions/authAction'
 
 const Login = props => {
+    const [ email , setEmail ] = useState('');
+    const [ password , setPassword ] = useState('');
+    const [ errorMessageStatus , setErrorMessageStatus ] = useState(false);
 
-    const { email , setEmail } = useState('');
-    const { password , setPassword } = useState('');
-    const { errorMessageStatus , setErrorMessageStatus } = useState(false);
+    console.log('>>>>>>>>>>13',props);
 
-
-   const allChangeHandler = (e) => {
-        const {name,value} = e.target;
-        if(name === "eamil"){
-            setEmail(value);
-        }
-        else setPassword(value);
-    };
 
    const handleLogin = async(e) => {
         e.preventDefault();
@@ -40,8 +33,8 @@ const Login = props => {
                     <div className="login-head">Login</div>
                     <div className="login-main">
                         <form onSubmit={handleLogin}>
-                            <input type="text" required className="input"name="email" value={email} placeholder="Email" onChange={allChangeHandler}/>
-                            <input type="password" required className="input" placeholder="Password" name="password" value={password} onChange={allChangeHandler}/>
+                            <input type="text" required className="input"name="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+                            <input type="password" required className="input" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                             <input type="submit" value="Submit" className="btn" />
                         </form>
                     </div>
@@ -61,4 +54,4 @@ const mapActionToProps = () => {
     }
 };
 
-export default withRouter(connect(mapStateToProps,mapActionToProps())(Login))
+export default withRouter(connect(mapStateToProps,mapActionToProps())(Login));

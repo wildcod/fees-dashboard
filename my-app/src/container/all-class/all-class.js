@@ -8,31 +8,16 @@ import './all-class.css'
 
 const AllCLass = props => {
 
-    const { firstName, setFirstName } = useState('');
-    const { lastName , setLastName } = useState('');
-    const { selectValue , setSelectValue } = useState('');
-    const { joiningDate , setJoiningDate } = useState('');
-    const { classOfStudent , setClassOfStudent } = useState('');
-    const { open , setOpen } = useState(false);
+    const [ firstName, setFirstName ] = useState('');
+    const [ lastName , setLastName ] = useState('');
+    const [ selectValue , setSelectValue ] = useState('');
+    const [ joiningDate , setJoiningDate ] = useState('');
+    const [ classOfStudent , setClassOfStudent ] = useState('');
+    const [ open , setOpen ] = useState(false);
 
 
     const handleChange = (e) => {
        props.history.push('/students/'+ e.target.value)
-    };
-
-   const changeHandler = (e) => {
-        const { name, value } = e.target;
-       switch(name){
-           case "firstName" : setFirstName(value);
-               return;
-           case "lastName" : setLastName(value);
-               return;
-           case "joiningDate" : setJoiningDate(value);
-               return;
-           case "classOfStudent" : setClassOfStudent(value);
-               return;
-           default : return;
-       }
     };
 
     const show = () => setOpen(true);
@@ -80,13 +65,13 @@ const AllCLass = props => {
             <Modal.Content>
                 <Form>
                     <Input type="text" placeholder="first name" name="firstName"
-                            className="profile-input-modal" value={firstName} onChange={changeHandler} required/>
+                            className="profile-input-modal" value={firstName} onChange={(e) => setFirstName(e.target.value)} required/>
                     <Input type="text" placeholder="last name" name="lastName"
-                            className="profile-input-modal" value={lastName} onChange={changeHandler} required/>
+                            className="profile-input-modal" value={lastName} onChange={(e) => setLastName(e.target.value)} required/>
                     <Input type="date" placeholder="joining date" name="joiningDate"
-                            className="profile-input-modal" value={joiningDate} onChange={changeHandler} required/>
+                            className="profile-input-modal" value={joiningDate} onChange={(e) => setJoiningDate(e.target.value)} required/>
                     <Input type="number" placeholder="class" name="classOfStudent" min="1" max="12"
-                             className="profile-input-modal" value={classOfStudent} onChange={changeHandler} required /><br/>
+                             className="profile-input-modal" value={classOfStudent} onChange={(e) => setClassOfStudent(e.target.value)} required /><br/>
                     <Button style={{ background : "#21ba45", color : "#fff", marginLeft : "24px"}}
                       onClick={createStudentHandler}>Submit</Button> &nbsp;&nbsp;
                     <Button onClick={close} style={{ background : "#db2828", color : "#fff"}}>Cancel</Button>

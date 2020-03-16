@@ -18,7 +18,7 @@ const signup = (req, res, next) => {
             name : req.body.name,
             email : req.body.email,
             password : hash
-        })
+        });
         user.save()
         .then(result => {
             console.log(result)

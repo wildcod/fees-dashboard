@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, {Component, useState} from 'react'
 import Header from '../../component/common/header/header';
 import './students.css'
 import { connect } from 'react-redux'
@@ -12,94 +12,88 @@ String.prototype.capitalize = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
 
-class Students extends Component {
+const Students = props => {
 
-    state = {
-        open : false,
-        deleteId:''
-    }
+    const [ open, setOpen ] = useState(false);
+    const [ deleteId, setDeleteId ] = useState('');
 
-    shouldComponentUpdate(nextProps,nexState) {
-            const propsDifference = this.props.students !== nextProps.students;
-            const stateDifference = this.state !== nexState;
-            return stateDifference || propsDifference
-    }
+    // shouldComponentUpdate(nextProps,nexState) {
+    //         const propsDifference = this.props.students !== nextProps.students;
+    //         const stateDifference = this.state !== nexState;
+    //         return stateDifference || propsDifference
+    // }
 
+    const close = () => setOpen(false);
 
-    handleDelete = async() =>{
-        const { deleteId } = this.state
-        await this.props.deleteStudent({deleteId});
-        this.close();
-    }
+   const handleDelete = async() =>{
+        await props.deleteStudent({deleteId});
+        close();
+    };
 
-    handleName = (studentId) => {
-        this.props.history.push('/profile/'+ this.props.match.params.classId + '$' + studentId)
-    }
+   const handleName = (studentId) => {
+        props.history.push('/profile/'+ props.match.params.classId + '$' + studentId)
+    };
 
-    show = (deleteId) =>{ 
-        this.setState({ open:true,deleteId })
-       }
-    close = () => this.setState({ open: false })
-    render(){
-        const classId = this.props.match.params.classId;
+   const show = (deleteId) => {
+        setOpen(true);
+        setDeleteId(deleteId);
+       };
 
-        const {open} = this.state
+    const classId = props.match.params.classId;
 
-        const studentOfClassId = this.props.students.filter(student => {
-            return student.class_name == classId
-        })
+    const studentOfClassId = props.students.filter(student => {
+            return student.class_name === classId;
+        });
     
         const students = studentOfClassId.map(student => {
             let classStatus = "students-status-false";
-            let res = false
+            let res = false;
             var today = new Date();
             var date = (today.getMonth()+1)+'/'+today.getFullYear();
             
             res = student["submit_date_and_include"].find(function(e){
-                var submitDate = new Date(e.submit_date)
-                    let modifiedSubmitDate = (submitDate.getMonth() + 1) + '/' + submitDate.getFullYear()
-                      return modifiedSubmitDate == date
-                    })
+                var submitDate = new Date(e.submit_date);
+                    let modifiedSubmitDate = (submitDate.getMonth() + 1) + '/' + submitDate.getFullYear();
+                      return modifiedSubmitDate === date
+                    });
             if(res && res.submit_date.length > 0){
                 classStatus = "students-status-true"
             }
 
             return  <div className="students-list-items" key={student._id}>
-                            <div className="students-name" onClick={() => this.handleName(student._id)}>{student.name.capitalize()}</div>
-                            <div className="students-update">
-                            <span className={classStatus}></span>
-                            <span className="students-update-icons">
-                                    {/* <i className="fas fa-edit"></i>&nbsp; &nbsp;  */}
-                                    <i className="fas fa-trash"  onClick={() => { this.show(student._id)}}></i>
-                            </span>
+                            <div className="students-name" onClick={() => handleName(student._id)}>{student.name.capitalize()}</div>
+                                    <div className="students-update">
+                                    <span className={classStatus}></span>
+                                    <span className="students-update-icons">
+                                    <i className="fas fa-trash"  onClick={() => show(student._id)} />
+                                    </span>
                             </div>
                     </div>
-        })
+        });
     return (
         <div>
             <Header />
             <div className="students-heading">
-                <div className="students-heading-content">Class {classId}</div>
+                <div className="students-heading-content">Class{classId}</div>
             </div>
             <div className="students-main">
                 <div className="students-list-container">
                     {students}
                 </div>
             </div>
-            <Modal size="mini" open={open} onClose={this.close}>
+            <Modal size="mini" open={open} onClose={close}>
                 <Modal.Header>Delete Your Account</Modal.Header>
                 <Modal.Content>
                     <p>Are you sure you want to delete your account</p>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button negative onClick={this.close}>No</Button>
-                    <Button positive icon='checkmark' onClick={this.handleDelete} labelPosition='right' content='Yes' />
+                    <Button negative onClick={close}>No</Button>
+                    <Button positive icon='checkmark' onClick={handleDelete} labelPosition='right' content='Yes' />
                 </Modal.Actions>
             </Modal>
         </div>
     );
-}
-}
+};
 
 const mapStateToProps = state => ({
     students: state.authStore.students,
@@ -109,6 +103,6 @@ const mapStateToProps = state => ({
     return {
       deleteStudent
     }
-}
+};
 
-export default withRouter(connect(mapStateToProps,mapActionToProps())(Students))
+export default React.memo(withRouter(connect(mapStateToProps,mapActionToProps())(Students)));

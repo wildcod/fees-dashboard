@@ -24,7 +24,7 @@ const initialState = {
     requestingSignup : false,
     loggedIn : false,
     students : [],
-}
+};
 
   export default function(state = initialState, action) {
 
@@ -44,8 +44,8 @@ const initialState = {
           return {
               ...state,
               requestingLogin : true
-          } 
-      case LOGIN_SUCCESS:
+          };
+        case LOGIN_SUCCESS:
           return {
               ...state,
               requestingLogin : false,
@@ -58,16 +58,16 @@ const initialState = {
           };
       case CREATE_STUDENT:
             let updatedStudents = state.students;
-            updatedStudents.push(action.payload.createdStudent)
+            updatedStudents.push(action.payload.createdStudent);
             return {
               ...state,
                 students : updatedStudents
-            }
+            };
       case DELETE_STUDENT:
            return {
                ...state,
                students : state.students.filter(student => student._id != action.payload.deleteId)
-           }
+           };
       case UPDATE_STUDENT: 
                   let students = state.students
                   students.find((o, i) => {
@@ -79,7 +79,7 @@ const initialState = {
                     return {
                         ...state,
                         students : students
-                    } 
+                    };
        case FEES_STUDENT: 
                     let newStudents = state.students
                     newStudents.find((o, i) => {
@@ -91,7 +91,7 @@ const initialState = {
                       return {
                           ...state,
                           students : newStudents
-                      }        
+                      };
       case AUTH_ERROR:
       case LOGIN_FAIL:
       case LOGOUT_SUCCESS:
