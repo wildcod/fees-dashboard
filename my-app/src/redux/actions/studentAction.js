@@ -94,11 +94,11 @@ export const createStudent = ({name,joiningDate,classOfStudent,userId})  => asyn
               class_name : classOfStudent,
               fees_check : false,
               userId :userId
-          }
+          };
 
           const res = await axios.post(api('createStudent'), createField);
           
-          const createdStudent = res.data.createdStudent
+          const createdStudent = res.data.createdStudent;
 
           dispatch({
             type : CREATE_STUDENT,

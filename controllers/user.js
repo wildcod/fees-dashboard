@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const User = require('../models/user')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose');
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 const signup = (req, res, next) => {
@@ -21,7 +21,7 @@ const signup = (req, res, next) => {
         });
         user.save()
         .then(result => {
-            console.log(result)
+            console.log(result);
             res.status(200).json({
                 message : "User is created"
             })
@@ -34,7 +34,7 @@ const signup = (req, res, next) => {
     }
 
  })
-}
+};
 
 const getUsers = (req, res, next) => {
     User.find()

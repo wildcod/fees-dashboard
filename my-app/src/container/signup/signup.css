@@ -56,6 +56,13 @@
     color: #1FC7A8;
 }
 
+.signup-status{
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    margin: 20px;
+}
+
 /* // Small devices (landscape phones, 576px and up) */
 /* @media (min-width: 576px) { 
     ...

@@ -9,7 +9,7 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     AUTH_ERROR,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS, CLEAR_ERROR
 } from '../types'
 
 import { returnErrors } from './errorAction'
@@ -17,6 +17,10 @@ import { returnErrors } from './errorAction'
 export const initiateSignup = ({name, email, password}) => async(dispatch) => {
 
     try{
+
+        dispatch({
+            type : CLEAR_ERROR
+        });
 
         dispatch({
             type : SIGNUP_START 
@@ -33,7 +37,6 @@ export const initiateSignup = ({name, email, password}) => async(dispatch) => {
         })
 
     }catch(e){
-
             dispatch(
                 returnErrors(e.response.data, e.response.status, 'SIGNUP_FAIL')
               );
@@ -48,6 +51,9 @@ export const initiateLogin = ({email, password}) => async(dispatch) => {
     try{
         dispatch({
             type : LOGIN_START 
+        });
+        dispatch({
+            type : CLEAR_ERROR
         });
         const res = await axios.post(api('loginUrl'),{
             email,password

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
 
@@ -22,6 +22,6 @@ const userSchema = mongoose.Schema({
     ref : 'Student',
    }]
   
-})
+});
 
-module.exports = mongoose.model('User' ,userSchema)
+module.exports = mongoose.model('User' ,userSchema);

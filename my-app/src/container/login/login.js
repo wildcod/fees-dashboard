@@ -9,19 +9,27 @@ const Login = props => {
     const [ email , setEmail ] = useState('');
     const [ password , setPassword ] = useState('');
     const [ errorMessageStatus , setErrorMessageStatus ] = useState(false);
+    const [loginStatus, setLoginStatus] = useState(false);
 
     console.log('>>>>>>>>>>13',props);
 
 
+    useEffect(() => {
+        if(props.loggedIn){
+            props.history.push('/classes');
+        }
+        else if(props.errorStatus !== null){
+            setErrorMessageStatus(true)
+        }
+    },[loginStatus]);
+
+
    const handleLogin = async(e) => {
         e.preventDefault();
-       setErrorMessageStatus(false);
+        setErrorMessageStatus(false);
+        setLoginStatus(true);
         await props.initiateLogin({email, password});
-        if(props.loggedIn){
-           props.history.push('/classes')
-        }else{
-            setErrorMessageStatus(true);
-        }
+        setLoginStatus(false);
     };
 
    return <div>
@@ -44,7 +52,8 @@ const Login = props => {
 };
 
 const mapStateToProps = state => ({
-    loggedIn: state.authStore.loggedIn
+    loggedIn: state.authStore.loggedIn,
+    errorStatus : state.errorStore.status
   });
 
 
