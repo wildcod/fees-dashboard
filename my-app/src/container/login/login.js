@@ -11,9 +11,6 @@ const Login = props => {
     const [ errorMessageStatus , setErrorMessageStatus ] = useState(false);
     const [loginStatus, setLoginStatus] = useState(false);
 
-    console.log('>>>>>>>>>>13',props);
-
-
     useEffect(() => {
         if(props.loggedIn){
             props.history.push('/classes');

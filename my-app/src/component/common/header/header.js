@@ -5,36 +5,34 @@ import { initiateLogout } from '../../../redux/actions/authAction'
 import { withRouter } from "react-router";
 import './header.css'
 
-class Header extends React.Component  {
+const Header = props => {
 
-  logOutHandler = async() => {
-    await this.props.initiateLogout();
-    this.props.history.push('/login')
-  }
-      render(){
+  const logOutHandler = async() => {
+    await props.initiateLogout();
+    props.history.push('/login')
+  };
 
-        const options = [
-      
-          // { key: 'profile', text: 'Your Profile' },
-          // { key: 'settings', text: 'Settings' },
-          { key: 'sign-out', text: 'Sign Out'  },
-        ]
+    const options = [
+      // { key: 'profile', text: 'Your Profile' },
+      // { key: 'settings', text: 'Settings' },
+      { key: 'sign-out', text: 'Sign Out'  },
+    ];
 
 
    const  trigger = (
       <span >
-        <Icon name='user' /> Hello, {this.props.name}
+        <Icon name='user' /> Hello, {props.name.split(' ')[0]}
       </span>
-    )
+    );
 
-          return (
-            <div className="header">
-              <span className="header-name">AK Tutor</span>
-              <Dropdown trigger={trigger} options={options} onChange={this.logOutHandler}  className="header-signedIn"/>
-            </div>
-          );
-      }
-}
+      return (
+        <div className="header">
+          <span className="header-name" onClick={() => props.history.push('/classes')}>AK Tutor</span>
+          <Dropdown trigger={trigger} options={options} onChange={logOutHandler}  className="header-signedIn"/>
+        </div>
+      );
+
+};
 
 const mapStateToProps = state => ({
    name: state.authStore.name,
@@ -44,7 +42,7 @@ const mapStateToProps = state => ({
   return {
      initiateLogout
   }
-}
+};
 
 
 export default withRouter(connect(mapStateToProps,mapActionToProps())(Header))

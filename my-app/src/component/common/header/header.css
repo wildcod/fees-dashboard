@@ -13,11 +13,12 @@
 .header-name{
     font-family: Montserrat;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 800;
     font-size: 40px;
     line-height: 59px;
     color: #FFFFFF;
     padding: 10px;
+    cursor: pointer;
 }
 
 .header-signedIn{
