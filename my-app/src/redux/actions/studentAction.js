@@ -2,13 +2,15 @@ import axios from 'axios'
 import api from '../../utils/api'
 
 import {
-   DELETE_STUDENT,
-   UPDATE_STUDENT,
-   CREATE_STUDENT,
-   FEES_STUDENT
+    DELETE_STUDENT,
+    UPDATE_STUDENT,
+    CREATE_STUDENT,
+    FEES_STUDENT, GET_STUDENT
 } from '../types'
 
 import { returnErrors } from './errorAction'
+
+const classNameArray = ['4','5','6','7','8','9','10','11','12'];
 
 export const deleteStudent = ({deleteId})  => async(dispatch) => {
 
@@ -142,4 +144,33 @@ export const submitFees = ({submit_date,include,studentId})  => async(dispatch) 
           );
     }
 
-}
+};
+
+export const getUserStudents = ({ email, class_name : className})  => async(dispatch) => {
+    try{
+        if(email.length > 0 && classNameArray.includes(className)){
+
+            const res = await axios.post(api('getStudentsByClass'), { email, className : className.toString()});
+            console.log('156',res);
+            const students = res.data.students;
+
+            console.log('159',students);
+
+            dispatch({
+                type : GET_STUDENT,
+                payload : {
+                    students
+                }
+            })
+
+        }else{
+            dispatch(
+                returnErrors("Enter valid field ", 500, 'Invalid Empty')
+            );
+        }
+    }catch(e){
+        dispatch(
+            returnErrors(e.response.data, e.response.status, 'GET_STUDENTS_ERROR')
+        );
+    }
+};

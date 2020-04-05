@@ -10,7 +10,8 @@ import {
     DELETE_STUDENT,
     UPDATE_STUDENT,
     CREATE_STUDENT,
-    FEES_STUDENT
+    FEES_STUDENT,
+    GET_STUDENT
 } from '../types'
 
 
@@ -53,8 +54,7 @@ const initialState = {
               loggedIn : true,
               email : action.payload.data["email"],
               name : action.payload.data["name"],
-              _id : action.payload.data["_id"],
-              students : action.payload.data["students"]
+              _id : action.payload.data["_id"]
           };
       case CREATE_STUDENT:
             let updatedStudents = state.students;
@@ -62,6 +62,13 @@ const initialState = {
             return {
               ...state,
                 students : updatedStudents
+            };
+        case GET_STUDENT :
+            const oldStudent = state.students;
+            const newClassStudents = oldStudent.concat(action.payload.students);
+            return {
+                ...state,
+                students : newClassStudents
             };
       case DELETE_STUDENT:
            return {

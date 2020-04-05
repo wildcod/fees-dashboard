@@ -3,10 +3,10 @@ import Header from '../../component/common/header/header'
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
 import { Modal, Form, Button, Input} from 'semantic-ui-react'
-import { createStudent} from '../../redux/actions/studentAction'
+import { createStudent , getUserStudents} from '../../redux/actions/studentAction'
 import './all-class.css'
 
-const AllCLass = props => {
+const AllCLass = ({ userId, email, getUserStudents,createStudent, history }) => {
 
     const [ firstName, setFirstName ] = useState('');
     const [ lastName , setLastName ] = useState('');
@@ -16,19 +16,20 @@ const AllCLass = props => {
     const [ open , setOpen ] = useState(false);
 
 
-    const handleChange = (e) => {
-       props.history.push('/students/'+ e.target.value)
+    const handleChange = async (e) => {
+       const class_name = e.target.value;
+       await getUserStudents({ email, class_name });
+       history.push('/students/'+ class_name);
     };
 
     const show = () => setOpen(true);
     const close = () => setOpen(false);
 
    const createStudentHandler = async(e) => {
-        const { userId } = props;
         const name = firstName + ' ' + lastName;
         if(name.length > 0 && lastName.length > 0 && joiningDate.length > 0 && classOfStudent.length > 0 && userId.length > 0)
            {
-               await props.createStudent({name,joiningDate,classOfStudent,userId});
+               await createStudent({name,joiningDate,classOfStudent,userId});
                        close();
             }
     };
@@ -85,11 +86,13 @@ const AllCLass = props => {
 
 const mapStateToProps = state => ({
     userId: state.authStore._id,
+    email : state.authStore.email
   });
 
 const mapActionToProps = () => {
     return {
-        createStudent
+        createStudent,
+        getUserStudents
     }
 };
 

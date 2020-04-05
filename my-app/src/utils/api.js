@@ -4,7 +4,8 @@ const uris = {
     deleteStudent : '/students',
     updateStudent : '/students',
     createStudent : '/students',
-    updateSubmitDate : '/students/modify-date'
+    updateSubmitDate : '/students/modify-date',
+    getStudentsByClass : '/users/students'
 };
 
 

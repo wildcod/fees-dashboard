@@ -57,7 +57,6 @@ const getUsers = (req, res, next) => {
 
 const login = (req, res, next) => {
     User.find({ email : req.body.email})
-    .populate('students','status submit_date_and_include joining_date _id name class_name')
     .exec()
     .then(user => {
         if(user.length < 1){
@@ -90,8 +89,7 @@ const login = (req, res, next) => {
                     token,
                     email : user[0].email,
                     name : user[0].name,
-                    _id : user[0]._id,
-                    students : user[0].students
+                    _id : user[0]._id
                 })
             }
             res.status(401).json({
@@ -117,7 +115,6 @@ const getUserStudents = (req, res, next) => {
         })
         .exec()
         .then(user => {
-            console.log("120>>",user[0].students);
             if(user.length < 1){
                 return res.status(401).json({
                     message : 'Student Not Found'
