@@ -5,6 +5,7 @@ const studentSchema = mongoose.Schema({
    _id : mongoose.Schema.Types.ObjectId,
    class_name : {
              type : String,
+             enum : ['4','5','6','7','8','9','10','11','12'],
              required : true,
          },
    name : {

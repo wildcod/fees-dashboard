@@ -21,7 +21,6 @@ const userSchema = mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref : 'Student',
    }]
-  
 });
 
 module.exports = mongoose.model('User' ,userSchema);

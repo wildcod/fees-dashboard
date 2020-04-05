@@ -107,10 +107,39 @@ const login = (req, res, next) => {
     })
 }
 
+const getUserStudents = (req, res, next) => {
+    User.find({ email : req.body.email})
+        // .populate('students','status submit_date_and_include joining_date _id name class_name')
+        .populate({
+            path: 'students',
+            match: { class_name : req.body.className },
+            select: 'status submit_date_and_include joining_date _id name class_name'
+        })
+        .exec()
+        .then(user => {
+            console.log("120>>",user[0].students);
+            if(user.length < 1){
+                return res.status(401).json({
+                    message : 'Student Not Found'
+                })
+            }
+            return res.status(200).json({
+                message : 'Student Found',
+                students : user[0].students
+            })
+        })
+        .catch(err => {
+            res.status(500).json({
+                error : err
+            })
+        })
+};
+
 
 
 module.exports = {
     signup,
     getUsers,
-    login
+    login,
+    getUserStudents
 }

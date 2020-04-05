@@ -182,5 +182,5 @@ module.exports = {
     deleteStudent,
     modifyStudent,
     getStudent,
-    updateSubmitDate
+    updateSubmitDate,
 }
